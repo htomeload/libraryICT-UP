@@ -107,14 +107,6 @@ export class HomePage {
 				},
 				{
 					text: 'ปิด',
-					handler: data => {
-						let alert = this.alertCtrl.create({
-							title: 'รับรางวัล',
-							subTitle: 'โปรดกลับมาเพิ่มเติมรายละเอียดเพื่อยืนยันสิทธืในรางวัลของท่าน',
-							buttons: ['ok'],
-						});
-						alert.present();
-					},
 				},
 			],
 		});
