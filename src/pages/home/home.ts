@@ -42,7 +42,6 @@ export class HomePage {
 			{
 				text: 'บันทึก',
 				handler: data => {
-					console.log(data);
 					let alert = this.alertCtrl.create({
 						title: 'รับรางวัล',
 						subTitle: 'ขอบคุณ คุณ '+data.nameText+' ที่ให้ความร่วมมือ!',
@@ -56,7 +55,6 @@ export class HomePage {
 		});
 		prompt.present();
 	}else{
-		console.log(data);
 		let alert = this.alertCtrl.create({
 			title: 'รับรางวัล',
 			subTitle: 'ขอบคุณ คุณ '+data+' ที่ให้ความร่วมมือ!',
