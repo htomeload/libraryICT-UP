@@ -1,24 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-<<<<<<< HEAD
-=======
 import { AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
->>>>>>> 62c50e0ae5aa6f2d183c243752e4cf2e74ee9f98
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-<<<<<<< HEAD
-export class HomePage {
-
-  constructor(public navCtrl: NavController) {
-
-  }
-
-}
-=======
 
 export class HomePage {
 	
@@ -129,4 +117,3 @@ export class HomePage {
   }
 
 }
->>>>>>> 62c50e0ae5aa6f2d183c243752e4cf2e74ee9f98
