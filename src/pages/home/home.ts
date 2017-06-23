@@ -13,15 +13,6 @@ export class HomePage {
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, private storage: Storage) {
 	
   }
-  
-  showAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'This is alerty!',
-      subTitle: 'I like drawinggggggggggggggggggggggg!',
-	  buttons: ['ok'],
-    });
-    alert.present();
-  }
 
   getReward() {
 	this.storage.get('nameText').then((data) => {
