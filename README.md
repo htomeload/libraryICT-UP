@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
 
 ## How to use this template
@@ -24,3 +25,8 @@ $ ionic cordova run ios
 
 Substitute ios for android if not on a Mac.
 
+=======
+This repository have main purpose as transferring files and backing up.
+
+Please expected for bug, error and irregular behavior of application when cloning this project.
+>>>>>>> 62c50e0ae5aa6f2d183c243752e4cf2e74ee9f98

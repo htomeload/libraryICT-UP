@@ -1,1 +1,19 @@
+<<<<<<< HEAD
 <ion-nav [root]="rootPage"></ion-nav>
+=======
+<ion-menu [content]="content">
+	<ion-header>
+		<ion-toolbar>
+			<ion-title>Menu</ion-title>
+		</ion-toolbar>
+	</ion-header>
+	<ion-content class="has-header">
+		<ion-list>
+			<button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+				<ion-icon name={{p.icon}} >&nbsp;&nbsp;{{p.title}}</ion-icon>
+			</button>
+		</ion-list>
+	</ion-content>
+</ion-menu>
+<ion-nav id="nav" [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>
+>>>>>>> 62c50e0ae5aa6f2d183c243752e4cf2e74ee9f98
