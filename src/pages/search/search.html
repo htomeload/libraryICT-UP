@@ -1,0 +1,23 @@
+<script src="js/controller.js"></script>
+<ion-header>
+  <ion-navbar>
+	<div style='float: left;'>
+		<ion-icon name="menu" menuToggle style='padding-left: 1rem; font-size: 3rem; cursor: pointer;'></ion-icon>
+	</div>
+	<div style='text-align: center;'>
+		<ion-title style='margin: auto;'>Search</ion-title>
+	</div>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list>
+		<ion-item>
+			<ion-label>
+				<ion-icon name='search'></ion-icon>
+			</ion-label>
+			<ion-input placeholder="ค้นหาหนังสือ" name="searchword" clearInput (keyup)="searchNow($data)"></ion-input>
+		</ion-item>
+	</ion-list>
+	<div>{{content}}</div>
+</ion-content>
