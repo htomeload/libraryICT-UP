@@ -1,6 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { FormsModule } from '@angular/forms';
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
@@ -13,6 +14,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { HTTP } from '@ionic-native/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { IonicStorageModule } from '@ionic/storage';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-	IonicStorageModule.forRoot()
+	IonicStorageModule.forRoot(),
+	FormsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -40,6 +43,7 @@ import { IonicStorageModule } from '@ionic/storage';
   providers: [
     StatusBar,
     SplashScreen,
+	HTTP,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

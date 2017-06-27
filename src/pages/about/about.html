@@ -1,9 +1,4 @@
-<html>
-	<head>
-		<meta charset="utf-8">
-		<script src="js/loginapp.js"></script>
-	</head>
-	<body ng-app="loginApp" ng-controller="loginControll">
+
 <ion-header>
   <ion-navbar>
     <div style='float: left;'>
@@ -19,22 +14,19 @@
 	<ion-list>
 		<ion-item>
 			<ion-label>
-				<ion-icon name='user'></ion-icon>
+				<ion-icon name='person'></ion-icon>
 			</ion-label>
-			<ion-input placeholder="ชื่อผู้ใช้" ng-model="username" clearInput ng-keyup="loginFunc()"></ion-input>
+			<ion-input placeholder="ชื่อผู้ใช้" [(ngModel)]="data.username" clearInput (keyup)="loginFunc($event)"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label>
 				<ion-icon name='key'></ion-icon>
 			</ion-label>
-			<ion-input placeholder="ชื่อผู้ใช้" type="password" ng-bind="password" clearInput ng-keyup="loginFunc()"></ion-input>
+			<ion-input placeholder="ชื่อผู้ใช้" type="password" [(ngModel)]="data.password" clearInput (keyup)="loginFunc($event)"></ion-input>
 		</ion-item>
 		<ion-item>
-			<button ng-click="loginFunc()">เข้าสู่ระบบ</button>
+			<button (click)="loginFunc($event)">เข้าสู่ระบบ</button>
 		</ion-item>
 	</ion-list>
-	<p ng-bind="messagelogin"></p>
-	<p>{{password}}</p>
+	<p>{{res}}</p>
 </ion-content>
-	</body>
-</html>
