@@ -11,22 +11,24 @@
 </ion-header>
 
 <ion-content padding>
+	<form (submit)="loginFunc()" #loginForm>
 	<ion-list>
 		<ion-item>
 			<ion-label>
 				<ion-icon name='person'></ion-icon>
 			</ion-label>
-			<ion-input placeholder="ชื่อผู้ใช้" [(ngModel)]="data.username" clearInput (keyup)="loginFunc($event)"></ion-input>
+			<ion-input placeholder="ชื่อผู้ใช้" name="username" [(ngModel)]="data.username" clearInput></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label>
 				<ion-icon name='key'></ion-icon>
 			</ion-label>
-			<ion-input placeholder="ชื่อผู้ใช้" type="password" [(ngModel)]="data.password" clearInput (keyup)="loginFunc($event)"></ion-input>
+			<ion-input placeholder="ชื่อผู้ใช้" type="password" name="password" [(ngModel)]="data.password" clearInput></ion-input>
 		</ion-item>
 		<ion-item>
-			<button (click)="loginFunc($event)">เข้าสู่ระบบ</button>
+			<button type="submit" (disabled)="!loginForm.form.valid" ion-button>เข้าสู่ระบบ</button>
 		</ion-item>
 	</ion-list>
-	<p>{{res}}</p>
+	</form>
+	<p>{{res.message}}</p>
 </ion-content>
