@@ -19,7 +19,7 @@ export class AboutPage {
 	public loginFunc() {
 	    this.res.message = 'กำลังล็อกอิน ชื่อผู้ใช้ '+this.data.username;
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', "//www.clm.up.ac.th/service/login_student_mod.php", true);
+		xhr.open('POST', "http://www.clm.up.ac.th/service/login_student_mod.php", true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send('username='+this.data.username+'&password='+this.data.password);
  
@@ -44,12 +44,14 @@ export class AboutPage {
 			if (c.indexOf(name) == 0) {
 				this.res.message2 += c.substring(name.length, c.length);
 				this.storage.set("loggedName", c.substring(name.length, c.length));
+				this.res.message += ' บันทึกข้อมูลการเข้าสู่ระบบแล้ว';
 			}
 		}
 	}
 	
 	public outFunc(){
-		this.storage.set("loggedName", "");
+		this.res.message = "";
+		this.storage.remove("loggedName");
 		this.res.message2 = "";
 	}
 

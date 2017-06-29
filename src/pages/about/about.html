@@ -10,9 +10,9 @@
   </ion-navbar>  
 </ion-header>
 
-<ion-content padding>
+<ion-content padding ngSwitch="res.message2">
 	<form (submit)="loginFunc()" #loginForm>
-	<ion-list *ngIf="res.message2==''">
+	<ion-list *ngIf="res.message2==null || res.message2==''">
 		<ion-item>
 			<ion-label>
 				<ion-icon name='person'></ion-icon>
