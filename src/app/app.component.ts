@@ -28,8 +28,8 @@ export class MyApp {
 	this.pages = [
 		{title: 'Homepage', component: HomePage, icon: 'home'},
 		{title: 'Search', component: SearchPage, icon: 'search'},
-		{title: 'About', component: AboutPage, icon: 'pulse'},
-		{title: 'Contact', component: ContactPage, icon: 'chatbubbles'},
+		{title: 'Rewards', component: AboutPage, icon: 'star'},
+		{title: 'About', component: ContactPage, icon: 'chatbubbles'},
 	];
   }
   

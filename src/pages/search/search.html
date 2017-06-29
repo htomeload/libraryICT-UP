@@ -1,4 +1,3 @@
-<script src="js/controller.js"></script>
 <ion-header>
   <ion-navbar>
 	<div style='float: left;'>
@@ -11,13 +10,18 @@
 </ion-header>
 
 <ion-content padding>
+	<div>
+		<button ion-button (click)="searchNow()" style='display: inline-block;'>
+			<ion-icon name='search' (click)="searchNow()"></ion-icon>
+		</button>
+		<ion-input style='display: inline-block; width: 80%;' placeholder="ค้นหาหนังสือ" name="searchword" [(ngModel)]="word" clearInput></ion-input>
+	</div>
+	<p>{{tester}}</p>
+	<div *ngIf="content">
 	<ion-list>
-		<ion-item>
-			<ion-label>
-				<ion-icon name='search'></ion-icon>
-			</ion-label>
-			<ion-input placeholder="ค้นหาหนังสือ" name="searchword" clearInput (keyup)="searchNow($data)"></ion-input>
+		<ion-item >
+			{{x}}
 		</ion-item>
 	</ion-list>
-	<div>{{content}}</div>
+	</div>
 </ion-content>
