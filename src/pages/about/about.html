@@ -12,7 +12,7 @@
 
 <ion-content padding>
 	<form (submit)="loginFunc()" #loginForm>
-	<ion-list>
+	<ion-list *ngIf="res.message2==''">
 		<ion-item>
 			<ion-label>
 				<ion-icon name='person'></ion-icon>
@@ -26,9 +26,14 @@
 			<ion-input placeholder="ชื่อผู้ใช้" type="password" name="password" [(ngModel)]="data.password" clearInput></ion-input>
 		</ion-item>
 		<ion-item>
-			<button type="submit" (disabled)="!loginForm.form.valid" ion-button>เข้าสู่ระบบ</button>
+			<button type="submit" (hidden)="!loginForm.form.valid" ion-button>เข้าสู่ระบบ</button>
 		</ion-item>
 	</ion-list>
 	</form>
+	<p></p>
 	<p>{{res.message}}</p>
+	<div *ngIf="res.message2">
+		<p>ข้อมูลการเข้าระบบของคุณ {{res.message2}}</p>
+		<button (click)="outFunc()" ion-button>ออกจากระบบ</button>
+	</div>
 </ion-content>

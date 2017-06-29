@@ -8,13 +8,16 @@ import { Storage } from '@ionic/storage';
 })
 export class AboutPage {
 	public data = {username: "", password: ""};
-	public res = {message: ""};
+	public res = {message: "", message2: ""};
 
 	constructor(public navCtrl: NavController, private storage: Storage ) {
+		this.storage.get("loggedName").then((data) => {
+			this.res.message2 = data;
+		});
 	}
 	
 	public loginFunc() {
-	    this.res.message = 'กำลังล็อกอิน ชื่อผู้ใช้ '+this.data.username+' รหัสผ่าน '+this.data.password;
+	    this.res.message = 'กำลังล็อกอิน ชื่อผู้ใช้ '+this.data.username;
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', "//www.clm.up.ac.th/service/login_student_mod.php", true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -23,14 +26,31 @@ export class AboutPage {
 		xhr.onreadystatechange = processRequest;
  
 		function processRequest(e){
-			var txt = "";
-			
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				var v = JSON.parse(e.target.response);
 					
-				txt = 'ข้อมูลการเข้าระบบของท่าน '+v.GetStudentInfoResult.FirstName_TH+' '+v.GetStudentInfoResult.LastName_TH;
+				document.cookie = 'user_name='+v.GetStudentInfoResult.FirstName_TH+' '+v.GetStudentInfoResult.LastName_TH;
 			}
 		}
+		
+		var name = "user_name=";
+		var decodedCookie = decodeURIComponent(document.cookie);
+		var ca = decodedCookie.split(';');
+		for(var i = 0; i <ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') {
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0) {
+				this.res.message2 += c.substring(name.length, c.length);
+				this.storage.set("loggedName", c.substring(name.length, c.length));
+			}
+		}
+	}
+	
+	public outFunc(){
+		this.storage.set("loggedName", "");
+		this.res.message2 = "";
 	}
 
 }
