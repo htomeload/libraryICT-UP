@@ -12,7 +12,7 @@
 
 <ion-content padding ngSwitch="res.message2">
 	<form (submit)="loginFunc()" #loginForm>
-	<ion-list *ngIf="res.message2==null || res.message2==''">
+	<ion-list *ngIf="!res.flagShow">
 		<ion-item>
 			<ion-label>
 				<ion-icon name='person'></ion-icon>
@@ -30,9 +30,8 @@
 		</ion-item>
 	</ion-list>
 	</form>
-	<p></p>
 	<p>{{res.message}}</p>
-	<div *ngIf="res.message2">
+	<div *ngIf="res.flagShow">
 		<p>ข้อมูลการเข้าระบบของคุณ {{res.message2}}</p>
 		<button (click)="outFunc()" ion-button>ออกจากระบบ</button>
 	</div>

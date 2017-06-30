@@ -14,13 +14,15 @@
 		<button ion-button (click)="searchNow()" style='display: inline-block;'>
 			<ion-icon name='search' (click)="searchNow()"></ion-icon>
 		</button>
-		<ion-input style='display: inline-block; width: 80%;' placeholder="ค้นหาหนังสือ" name="searchword" [(ngModel)]="word" clearInput></ion-input>
+		<ion-input style='display: inline-block; width: 80%; font-size: 2rem;' placeholder="ค้นหาหนังสือ" name="searchword" [(ngModel)]="word" clearInput></ion-input>
 	</div>
-	<p>{{tester}}</p>
-	<div *ngIf="content">
+	<p *ngIf="!flagShow">
+	{{message.mes1}}
+	</p>
+	<div *ngIf="flagShow">
 	<ion-list>
-		<ion-item >
-			{{x}}
+		<ion-item *ngFor="let xc of content">
+		{{xc.content}}
 		</ion-item>
 	</ion-list>
 	</div>

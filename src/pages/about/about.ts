@@ -8,11 +8,14 @@ import { Storage } from '@ionic/storage';
 })
 export class AboutPage {
 	public data = {username: "", password: ""};
-	public res = {message: "", message2: ""};
+	public res = {message: "", message2: "", flagShow: false};
 
 	constructor(public navCtrl: NavController, private storage: Storage ) {
 		this.storage.get("loggedName").then((data) => {
-			this.res.message2 = data;
+			if (data != '' && data != null){
+				this.res.message2 = data;
+				this.res.flagShow = true;
+			}
 		});
 	}
 	
@@ -42,6 +45,7 @@ export class AboutPage {
 				c = c.substring(1);
 			}
 			if (c.indexOf(name) == 0) {
+				this.res.flagShow = true;
 				this.res.message2 += c.substring(name.length, c.length);
 				this.storage.set("loggedName", c.substring(name.length, c.length));
 				this.res.message += ' บันทึกข้อมูลการเข้าสู่ระบบแล้ว';
@@ -50,6 +54,7 @@ export class AboutPage {
 	}
 	
 	public outFunc(){
+		this.res.flagShow = false;
 		this.res.message = "";
 		this.storage.remove("loggedName");
 		this.res.message2 = "";
