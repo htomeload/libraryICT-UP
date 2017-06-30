@@ -30,47 +30,48 @@ export class SearchPage {
 		}
 		
 		var i = 0;
+		var str = "SearchTerm="+this.word+"&SearchType=ti";
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'http://www.clm.up.ac.th/project/local_database/api/search_test.php', true);
+		xhr.open('POST', 'http://clm.up.ac.th/services/SearchService.asmx/Search', true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhr.send("word="+this.word);
+		xhr.send(str);
 		
 		xhr.onreadystatechange = pushresult;
 		
 		function pushresult(e){
+			console.log(e);
 			if (xhr.readyState == 4 && xhr.status == 200){
-				var v = JSON.parse(e.target.response);
+				console.log(e);
+				/*var v = JSON.parse(e.target.response);
 				
 				for(i = 0; i < v.rows; i++){
 					document.cookie = "result"+i+"="+v[i].title;
-				}
+				}*/
 			}
 		}
 		
-		if (this.word != '' && this.word != null){
+		/*if (this.word != '' && this.word != null){
+			var j = 0;
+			var decodedCookie = decodeURIComponent(document.cookie);
+			var ca = decodedCookie.split(';');
 			
-		var j = 0;
-		var decodedCookie = decodeURIComponent(document.cookie);
-		var ca = decodedCookie.split(';');
-			
-		for(var k = 0; k < ca.length; k++){
-			var name = "result"+j+"=";
-			var c = ca[k];
-			while (c.charAt(0) == ' ') {
-				c = c.substring(1);
-			}
-			if (c.indexOf(name) == 0) {
-				if (!this.flagShow){
-					this.flagShow = true;
+			for(var k = 0; k < ca.length; k++){
+				var name = "result"+j+"=";
+				var c = ca[k];
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1);
 				}
-				if (typeof c.substring(name.length, c.length) != "object" && c.substring(name.length, c.length) != '' && c.substring(name.length, c.length) != null){
-					this.content.push({"content":c.substring(name.length, c.length)});
-					j++;
+				if (c.indexOf(name) == 0) {
+					if (!this.flagShow){
+						this.flagShow = true;
+					}
+					if (typeof c.substring(name.length, c.length) != "object" && c.substring(name.length, c.length) != '' && c.substring(name.length, c.length) != null){
+						this.content.push({"content":c.substring(name.length, c.length)});
+						j++;
+					}
 				}
 			}
-		}
-		
-		}
+		}*/
 	}
 	
 	

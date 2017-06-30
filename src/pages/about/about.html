@@ -23,12 +23,22 @@
 			<ion-label>
 				<ion-icon name='key'></ion-icon>
 			</ion-label>
-			<ion-input placeholder="ชื่อผู้ใช้" type="password" name="password" [(ngModel)]="data.password" clearInput></ion-input>
+			<ion-input placeholder="รหัสผ่าน" type="password" name="password" [(ngModel)]="data.password" clearInput></ion-input>
+		</ion-item>
+		<ion-item *ngIf="res.showPass">
+			<ion-label>
+				<ion-icon name='key' style='margin-right: 1rem;'></ion-icon>
+				{{data.password}}
+			</ion-label>
 		</ion-item>
 		<ion-item>
-			<button type="submit" (hidden)="!loginForm.form.valid" ion-button>เข้าสู่ระบบ</button>
+			<ion-checkbox name="showPass" [(ngModel)]="res.showPass"></ion-checkbox>
+			<ion-label>
+				แสดงรหัสผ่าน
+			</ion-label>
 		</ion-item>
 	</ion-list>
+	<button type="submit" *ngIf="data.username != '' && data.password != '' && !res.flagShow" ion-button>เข้าสู่ระบบ</button>
 	</form>
 	<p>{{res.message}}</p>
 	<div *ngIf="res.flagShow">

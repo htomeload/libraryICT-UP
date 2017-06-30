@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
 })
 export class AboutPage {
 	public data = {username: "", password: ""};
-	public res = {message: "", message2: "", flagShow: false};
+	public res = {message: "", message2: "", flagShow: false, showPass: false};
 
 	constructor(public navCtrl: NavController, private storage: Storage ) {
 		this.storage.get("loggedName").then((data) => {
