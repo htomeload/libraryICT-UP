@@ -10,9 +10,35 @@ import { Storage } from '@ionic/storage';
 
 export class HomePage {
 	
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, private storage: Storage) {
-	
-  }
+	constructor(public navCtrl: NavController, public alertCtrl: AlertController, private storage: Storage) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "http://www.clm.up.ac.th/project/myLib/API/news/", true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send();
+		
+		xhr.onreadystatechange = popup;
+		
+		function popup(e){
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				localStorage.setItem("popmessage", e.target.response);
+			}
+		}
+		setTimeout(() => {
+			let v = JSON.parse(localStorage.getItem("popmessage"));
+			
+			let temp = "<div style='text-align: center;'>"+
+						"<h4>"+v[0].nu_title+"</h4>"+
+						"<img style='margin: auto;' src='http://www.clm.up.ac.th/project/news_clm/uploadImg/"+v[0].nu_gallery_cover+"'></img>"+
+					"</div>";
+			let welcome = this.alertCtrl.create({
+				title: 'ข่าวประชาสัมพันธ์',
+				message: temp,
+				buttons: ['ปิด'],
+			});
+			welcome.present();
+			localStorage.removeItem("popmessage");
+		}, 500);
+	}
 
   getReward() {
 	this.storage.get('nameText').then((data) => {

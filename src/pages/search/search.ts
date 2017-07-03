@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
  
 @Component({
   templateUrl: 'search.html'
@@ -8,15 +7,23 @@ import { Storage } from '@ionic/storage';
 export class SearchPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
+	constructor(public navCtrl: NavController) {
+	}
+  
 	public word = "";
 	public message = {mes1: "ผลลัพธ์การค้นหาจะแสดงผลที่นี้ หากผลการค้นหาไม่แสดง ให้กดที่ปุ่มแว่นขยายอีกครั้ง"}
 	public content = new Array();
 	public flagShow = false;
- 
-	constructor(public navCtrl: NavController, private storage: Storage ) {
-	}
+	public codeUser = "";
 
 	searchNow(){
+		let v = localStorage.getItem("code_name");
+		if (v != '' && v != null){
+			this.codeUser = v;
+		}else{
+			this.codeUser = "57021229";
+		}
+			
 		if (this.flagShow){
 			this.message.mes1 = "ผลลัพธ์การค้นหาจะแสดงผลที่นี้ หากผลการค้นหาไม่แสดง ให้กดที่ปุ่มแว่นขยายอีกครั้ง";
 			this.content = new Array();
@@ -30,9 +37,10 @@ export class SearchPage {
 		}
 		
 		var i = 0;
-		var str = "SearchTerm="+this.word+"&SearchType=ti";
+		var str = "word="+this.word+"&username="+this.codeUser;
+		console.log(this.codeUser);
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'http://clm.up.ac.th/services/SearchService.asmx/Search', true);
+		xhr.open('POST', 'http://www.clm.up.ac.th/project/myLib/API/searchAlist/', true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send(str);
 		
@@ -41,7 +49,6 @@ export class SearchPage {
 		function pushresult(e){
 			console.log(e);
 			if (xhr.readyState == 4 && xhr.status == 200){
-				console.log(e);
 				/*var v = JSON.parse(e.target.response);
 				
 				for(i = 0; i < v.rows; i++){
