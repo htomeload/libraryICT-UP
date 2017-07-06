@@ -1,16 +1,22 @@
 <ion-menu [content]="content">
 	<ion-header>
 		<ion-toolbar>
-			<ion-title>Menu</ion-title>
+			<ion-grid>
+				<ion-row>
+					<ion-col>
+						<div style="font-size: 1.9rem;" text-start>Menu</div>
+					</ion-col>
+					<ion-col>
+						<ion-icon name="close" style="font-size: 2.5rem; cursor: pointer;" float-end menuClose></ion-icon>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
 		</ion-toolbar>
 	</ion-header>
 	<ion-content class="has-header">
 		<ion-list>
 			<button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
 				<ion-icon name={{p.icon}} >&nbsp;&nbsp;{{p.title}}</ion-icon>
-			</button>
-			<button menuClose ion-item>
-				<ion-icon name="close" >&nbsp;&nbsp;Close</ion-icon>
 			</button>
 		</ion-list>
 	</ion-content>

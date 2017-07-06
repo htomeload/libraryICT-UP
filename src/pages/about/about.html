@@ -1,13 +1,18 @@
-
 <ion-header>
-  <ion-navbar>
-    <div style='float: left;'>
-		<ion-icon name="menu" menuToggle style='padding-left: 1rem; font-size: 3rem; cursor: pointer;'></ion-icon>
-	</div>
-	<div style='text-align: center;'>
-		<ion-title style='margin: auto;'>Rewards</ion-title>
-	</div>
-  </ion-navbar>  
+  	<ion-navbar>
+	  	<ion-grid>
+			<ion-row>
+				<ion-col>
+					<ion-icon name="menu" menuToggle float-start style='font-size: 3rem; cursor: pointer;'></ion-icon>
+				</ion-col>
+				<ion-col>
+					<div style="font-size: 2rem;" text-center>Rewards</div>
+				</ion-col>
+				<ion-col>
+				</ion-col>
+			</ion-row>
+	  	</ion-grid>
+  	</ion-navbar>
 </ion-header>
 
 <ion-content padding ngSwitch="res.message2">
@@ -40,6 +45,10 @@
 	</ion-list>
 	<button type="submit" *ngIf="data.username != '' && data.password != '' && !res.flagShow" ion-button>เข้าสู่ระบบ</button>
 	</form>
+	<div *ngIf="(data.password == '' || data.username == '') && !res.flagShow">
+		<br/>
+		กรุณากรอกชื่อผู้ใช้และรหัสผ่านให้ครบถ้วน
+	</div>
 	<p>{{res.message}}</p>
 	<div *ngIf="res.flagShow">
 		<p>ข้อมูลการเข้าระบบของคุณ {{res.message2}}</p>

@@ -17,68 +17,39 @@ export class SearchPage {
 	public codeUser = "";
 
 	searchNow(){
-		let v = localStorage.getItem("code_name");
-		if (v != '' && v != null){
-			this.codeUser = v;
-		}else{
-			this.codeUser = "57021229";
-		}
-			
-		if (this.flagShow){
-			this.message.mes1 = "ผลลัพธ์การค้นหาจะแสดงผลที่นี้ หากผลการค้นหาไม่แสดง ให้กดที่ปุ่มแว่นขยายอีกครั้ง";
-			this.content = new Array();
-			this.flagShow = false;
-		}
+		if (this.flagShow)
+			this.content = Array();
 		
-		if (this.word == '' || this.word == null){
-			this.content = new Array();
+		if (this.word == ''){
+			this.content = Array();
 			this.flagShow = false;
 			this.message.mes1 = "กรุณาพิมพ์คำค้นหาที่ต้องการก่อน";
-		}
+		}else{
+			let str = "word="+this.word;
+			let xhr = new XMLHttpRequest();
+			xhr.open('POST', 'http://localhost/libraryICT-UP/api/searchbook/', true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.send(str);
 		
-		var i = 0;
-		var str = "word="+this.word+"&username="+this.codeUser;
-		console.log(this.codeUser);
-		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'http://www.clm.up.ac.th/project/myLib/API/searchAlist/', true);
-		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhr.send(str);
-		
-		xhr.onreadystatechange = pushresult;
-		
-		function pushresult(e){
-			console.log(e);
-			if (xhr.readyState == 4 && xhr.status == 200){
-				/*var v = JSON.parse(e.target.response);
+			let pushresult = ((e) => {
+				if (xhr.readyState == 4 && xhr.status == 200){
+					let v = JSON.parse(e.target.response);
 				
-				for(i = 0; i < v.rows; i++){
-					document.cookie = "result"+i+"="+v[i].title;
-				}*/
-			}
-		}
+					if (v.success){
+						if (v.rows > 0)
+							this.flagShow = true;
+						
+						for(let i = 0; i < v.rows; i++){
+							if (this.content.indexOf(v[i]) == -1){
+								this.content.push({"content": v[i].book_name});
+							}
+						}
+					}
+				}
+			});
 		
-		/*if (this.word != '' && this.word != null){
-			var j = 0;
-			var decodedCookie = decodeURIComponent(document.cookie);
-			var ca = decodedCookie.split(';');
-			
-			for(var k = 0; k < ca.length; k++){
-				var name = "result"+j+"=";
-				var c = ca[k];
-				while (c.charAt(0) == ' ') {
-					c = c.substring(1);
-				}
-				if (c.indexOf(name) == 0) {
-					if (!this.flagShow){
-						this.flagShow = true;
-					}
-					if (typeof c.substring(name.length, c.length) != "object" && c.substring(name.length, c.length) != '' && c.substring(name.length, c.length) != null){
-						this.content.push({"content":c.substring(name.length, c.length)});
-						j++;
-					}
-				}
-			}
-		}*/
+			xhr.onreadystatechange = pushresult;
+		}
 	}
 	
 	

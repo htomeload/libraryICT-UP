@@ -14,7 +14,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { IonicStorageModule } from '@ionic/storage';
-import { HTTP } from '@ionic-native/http';
 
 @NgModule({
   declarations: [
@@ -43,7 +42,6 @@ import { HTTP } from '@ionic-native/http';
   providers: [
     StatusBar,
     SplashScreen,
-	HTTP,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

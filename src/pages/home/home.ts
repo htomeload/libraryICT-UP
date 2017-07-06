@@ -12,32 +12,30 @@ export class HomePage {
 	
 	constructor(public navCtrl: NavController, public alertCtrl: AlertController, private storage: Storage) {
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://www.clm.up.ac.th/project/myLib/API/news/", true);
+		xhr.open("POST", "http://localhost/libraryICT-UP/api/news/", true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send();
 		
-		xhr.onreadystatechange = popup;
-		
-		function popup(e){
+		let popup = ((e) => {
 			if (xhr.readyState == 4 && xhr.status == 200) {
-				localStorage.setItem("popmessage", e.target.response);
-			}
-		}
-		setTimeout(() => {
-			let v = JSON.parse(localStorage.getItem("popmessage"));
+				let v = JSON.parse(e.target.response);
 			
-			let temp = "<div style='text-align: center;'>"+
-						"<h4>"+v[0].nu_title+"</h4>"+
-						"<img style='margin: auto;' src='http://www.clm.up.ac.th/project/news_clm/uploadImg/"+v[0].nu_gallery_cover+"'></img>"+
-					"</div>";
-			let welcome = this.alertCtrl.create({
-				title: 'ข่าวประชาสัมพันธ์',
-				message: temp,
-				buttons: ['ปิด'],
-			});
-			welcome.present();
-			localStorage.removeItem("popmessage");
-		}, 500);
+				if (v.success){
+					let temp = "<div style='text-align: center;'>"+
+								"<h4>"+v[0].nu_title+"</h4>"+
+							"</div>";
+					//"<img style='margin: auto;' src='http://localhost/libraryICT-UP/uploadImg/"+v[0].nu_gallery_cover+"'></img>"+
+					let welcome = this.alertCtrl.create({
+						title: 'ข่าวประชาสัมพันธ์',
+						message: temp,
+						buttons: ['ปิด'],
+					});
+					welcome.present();
+				}
+			}
+		});
+		
+		xhr.onreadystatechange = popup;
 	}
 
   getReward() {

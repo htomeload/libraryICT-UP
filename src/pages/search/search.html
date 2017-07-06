@@ -1,18 +1,24 @@
 <ion-header>
-  <ion-navbar>
-	<div style='float: left;'>
-		<ion-icon name="menu" menuToggle style='padding-left: 1rem; font-size: 3rem; cursor: pointer;'></ion-icon>
-	</div>
-	<div style='text-align: center;'>
-		<ion-title style='margin: auto;'>Search</ion-title>
-	</div>
-  </ion-navbar>
+  	<ion-navbar>
+	  	<ion-grid>
+			<ion-row>
+				<ion-col>
+					<ion-icon name="menu" menuToggle float-start style='font-size: 3rem; cursor: pointer;'></ion-icon>
+				</ion-col>
+				<ion-col>
+					<div style="font-size: 2rem;" text-center>Search</div>
+				</ion-col>
+				<ion-col>
+				</ion-col>
+			</ion-row>
+	  	</ion-grid>
+  	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
 	<div>
-		<button ion-button (click)="searchNow()" style='display: inline-block;'>
-			<ion-icon name='search' (click)="searchNow()"></ion-icon>
+		<button ion-button (click)="searchNow()" style='display: inline-block;' my-click-once>
+			<ion-icon name='search'></ion-icon>
 		</button>
 		<ion-input style='display: inline-block; width: 80%; font-size: 2rem;' placeholder="ค้นหาหนังสือ" name="searchword" [(ngModel)]="word" clearInput></ion-input>
 	</div>
