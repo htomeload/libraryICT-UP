@@ -13,6 +13,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { BLE } from '@ionic-native/ble';
+import { IBeacon } from '@ionic-native/ibeacon';
+
 import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
@@ -42,6 +45,8 @@ import { IonicStorageModule } from '@ionic/storage';
   providers: [
     StatusBar,
     SplashScreen,
+	BLE,
+	IBeacon,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

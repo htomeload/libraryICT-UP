@@ -27,24 +27,26 @@ export class SearchPage {
 		}else{
 			let str = "word="+this.word;
 			let xhr = new XMLHttpRequest();
-			xhr.open('POST', 'http://localhost/libraryICT-UP/api/searchbook/', true);
+			//xhr.open('POST', 'http://localhost/libraryICT-UP/api/searchbook/', true);
+			xhr.open('POST', 'http://www.clm.up.ac.th/project/local_database/API/', true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhr.send(str);
 		
 			let pushresult = ((e) => {
 				if (xhr.readyState == 4 && xhr.status == 200){
 					let v = JSON.parse(e.target.response);
-				
-					if (v.success){
+					
+					//if (v.success){
 						if (v.rows > 0)
 							this.flagShow = true;
 						
 						for(let i = 0; i < v.rows; i++){
-							if (this.content.indexOf(v[i]) == -1){
-								this.content.push({"content": v[i].book_name});
+							if (this.content.indexOf(v[i].title) == -1){
+								//this.content.push({"content": v[i].book_name});
+								this.content.push({"content": v[i].title});
 							}
 						}
-					}
+					//}
 				}
 			});
 		
