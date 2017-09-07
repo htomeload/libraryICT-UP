@@ -1,35 +1,130 @@
 <ion-header>
-  	<ion-navbar>
-	  	<ion-grid>
+  	<ion-navbar class="no-padding">
+      	<ion-grid class="nav-bar">
 			<ion-row>
 				<ion-col>
-					<ion-icon name="menu" menuToggle float-start style='font-size: 3rem; cursor: pointer;'></ion-icon>
+					<button class="icon-menu override-button-inner text-left full-width nav-bar" menuToggle>
+						<ion-icon name="menu"></ion-icon>
+					</button>
 				</ion-col>
-				<ion-col>
-					<div style="font-size: 2rem;" text-center>Search</div>
-				</ion-col>
-				<ion-col>
+				<ion-col class="text-menu align-center" style="-webkit-flex: 3;">
+					<div style="width: 100%; transform: translate(-16%,0%);">
+						ค้นหาหนังสือ
+					</div>
 				</ion-col>
 			</ion-row>
-	  	</ion-grid>
+		</ion-grid>
+  	</ion-navbar>
+	<ion-navbar class="no-padding">
+		<ion-searchbar
+		[(ngModel)]="word"
+		[showCancelButton]="true"
+		(ionInput)="searching($event)"
+		(ionCancel)="clearsearch()"
+		style="width: 100%;">
+		</ion-searchbar>
+	</ion-navbar>
+	<ion-navbar class="no-padding">
+      	<ion-grid>
+			<ion-row style="max-height: 100%;">
+				<ion-col style="width: 50%;">
+					<ion-label style="max-width: 42%; width: 42%; max-height: 100%; margin: 0rem; padding: 0rem;" class="inline">ค้นหา</ion-label>
+					<ion-select [(ngModel)]="type" style="max-width: 42%; max-height: 100%; margin: 0rem; padding: 0rem; text-overflow: ellipsis;" class="inline">
+						<ion-option value="name" selected>ชื่อหนังสือ</ion-option>
+						<ion-option value="code">รหัสหนังสือ</ion-option>
+					</ion-select>
+				</ion-col>
+				<ion-col style="width: 50%;">
+					<ion-label style="max-width: 42%; width: 42%; max-height: 100%; margin: 0rem; padding: 0rem;" class="inline">เรียงจาก</ion-label>
+					<ion-select [(ngModel)]="order" style="max-width: 42%; max-height: 100%; width: 42%; margin: 0rem; padding: 0rem; text-overflow: ellipsis;" class="inline">
+						<ion-option value="asc" selected>ใหม่ไปเก่า</ion-option>
+						<ion-option value="desc">เก่าไปใหม่</ion-option>
+					</ion-select>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
   	</ion-navbar>
 </ion-header>
 
-<ion-content padding>
-	<div>
-		<button ion-button (click)="searchNow()" style='display: inline-block;' my-click-once>
-			<ion-icon name='search'></ion-icon>
+<ion-content>
+	<ion-item>
+		<div style="padding-left: 10%; width: 90%;" class="align-left inline">
+			COMTODAY ฉบับที่ 355
+		</div>
+		<button ion-button class="secondary" (click)="openmap()">
+			<ion-icon name="md-map" class="align-right pointer"></ion-icon>
 		</button>
-		<ion-input style='display: inline-block; width: 80%; font-size: 2rem;' placeholder="ค้นหาหนังสือ" name="searchword" [(ngModel)]="word" clearInput></ion-input>
-	</div>
-	<p *ngIf="!flagShow">
-	{{message.mes1}}
-	</p>
-	<div *ngIf="flagShow">
-	<ion-list>
-		<ion-item *ngFor="let xc of content">
-		{{xc.content}}
-		</ion-item>
-	</ion-list>
-	</div>
+	</ion-item>
+	<ion-item>
+		<div style="padding-left: 10%; width: 90%;" class="align-left inline">
+			COMTODAY ฉบับที่ 354
+		</div>
+		<button ion-button class="secondary" (click)="openmap()">
+			<ion-icon name="md-map" class="align-right pointer"></ion-icon>
+		</button>
+	</ion-item>
+	<ion-item>
+		<div style="padding-left: 10%; width: 90%;" class="align-left inline">
+			COMTODAY ฉบับที่ 353
+		</div>
+		<button ion-button class="secondary" (click)="openmap()">
+			<ion-icon name="md-map" class="align-right pointer"></ion-icon>
+		</button>
+	</ion-item>
+	<ion-item>
+		<div style="padding-left: 10%; width: 90%;" class="align-left inline">
+			COMTODAY ฉบับที่ 352
+		</div>
+		<button ion-button class="secondary" (click)="openmap()">
+			<ion-icon name="md-map" class="align-right pointer"></ion-icon>
+		</button>
+	</ion-item>
+	<ion-item>
+		<div style="padding-left: 10%; width: 90%;" class="align-left inline">
+			COMTODAY ฉบับที่ 351
+		</div>
+		<button ion-button class="secondary" (click)="openmap()">
+			<ion-icon name="md-map" class="align-right pointer"></ion-icon>
+		</button>
+	</ion-item>
+	<ion-item>
+		<div style="padding-left: 10%; width: 90%;" class="align-left inline">
+			COMTODAY ฉบับที่ 350
+		</div>
+		<button ion-button class="secondary" (click)="openmap()">
+			<ion-icon name="md-map" class="align-right pointer"></ion-icon>
+		</button>
+	</ion-item>
+	<ion-item>
+		<div style="padding-left: 10%; width: 90%;" class="align-left inline">
+			COMTODAY ฉบับที่ 349
+		</div>
+		<button ion-button class="secondary" (click)="openmap()">
+			<ion-icon name="md-map" class="align-right pointer"></ion-icon>
+		</button>
+	</ion-item>
+	<ion-item>
+		<div style="padding-left: 10%; width: 90%;" class="align-left inline">
+			COMTODAY ฉบับที่ 348
+		</div>
+		<button ion-button class="secondary" (click)="openmap()">
+			<ion-icon name="md-map" class="align-right pointer"></ion-icon>
+		</button>
+	</ion-item>
+	<ion-item>
+		<div style="padding-left: 10%; width: 90%;" class="align-left inline">
+			COMTODAY ฉบับที่ 347
+		</div>
+		<button ion-button class="secondary" (click)="openmap()">
+			<ion-icon name="md-map" class="align-right pointer"></ion-icon>
+		</button>
+	</ion-item>
+	<ion-item>
+		<div style="padding-left: 10%; width: 90%;" class="align-left inline">
+			COMTODAY ฉบับที่ 346
+		</div>
+		<button ion-button class="secondary" (click)="openmap()">
+			<ion-icon name="md-map" class="align-right pointer"></ion-icon>
+		</button>
+	</ion-item>
 </ion-content>

@@ -1,5 +1,8 @@
 {
-  "name": "myApp",
-  "app_id": "fbdc374f",
-  "type": "ionic-angular"
+  "name": "beapr",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

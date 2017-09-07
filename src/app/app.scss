@@ -1,5 +1,56 @@
-// http://ionicframework.com/docs/v2/theming/
+// http://ionicframework.com/docs/theming/
 
+/* Override default ionic's css rules */
+.tabbar {
+	background-color: #42388c !important;
+	.tab-button-icon {
+		color: white !important;
+	}
+}
+
+.back-button {
+	background-color: #42388c !important;
+	height: 6rem !important;
+	.back-button-icon {
+		color: white !important;
+	}
+}
+
+.back-button-md, .bar-button-md {
+	margin: 0px !important;
+	border-radius: 0px !important;
+}
+
+.searchbar-input {
+	border-radius: 2rem !important;
+}
+
+.override-button-inner.text-left {
+	text-align: left !important;
+	-webkit-box-align: start !important;
+	align-items: left !important;
+	-webkit-box-pack: start !important;
+	justify-content: left !important;
+	direction: ltr !important;
+}
+
+.override-button-inner.text-center {
+	text-align: center !important;
+	-webkit-box-align: center !important;
+	align-items: center !important;
+	-webkit-box-pack: center !important;
+	justify-content: center !important;
+	white-space: nowrap !important;
+}
+
+.override-button-inner.text-right {
+	text-align: right !important;
+	-webkit-box-align: end !important;
+	align-items: right !important;
+	-webkit-box-pack: end !important;
+	justify-content: right !important;
+	direction: rtl !important;
+}
 
 // App Global Sass
 // --------------------------------------------------
@@ -14,3 +65,149 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+/* Specified css rule of some elements */
+
+.primary {
+	background-color: #42388c !important;
+	color: white !important;
+	
+	:active {
+		background-color: rgb(216, 190, 106) !important;
+	}
+}
+
+.secondary {
+	background-color: rgb(216, 190, 106) !important;
+	color: white !important;
+	
+	:active {
+		background-color: #42388c !important;
+	}
+}
+
+.nav-bar {
+	background-color: #42388c;
+	min-height: 6rem !important;
+}
+
+.no-padding {
+	padding: 0px !important;
+	height: 6rem !important;
+	min-height: initial !important;
+}
+
+.icon-menu {
+	padding: 1rem;
+	font-size: 2rem;
+	color: white;
+}
+
+.text-menu {
+	font-size: 1.7rem;
+	color: white;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+/* Set position of elements */
+
+.align-left {
+	text-align: left;
+	margin: auto;
+}
+
+.align-center {
+	text-align: center;
+	margin: auto;
+}
+
+.align-right {
+	text-align: right;
+	margin: auto;
+}
+
+.valign-top {
+	vertical-align: top;
+	margin: auto;
+}
+
+.valign-middle {
+	vertical-align: middle;
+	margin: auto;
+}
+
+.valign-bottom {
+	vertical-align: bottom;
+	margin: auto;
+}
+
+.hvalign-center {
+	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+}
+
+.inline {
+	display: inline-block;
+}
+
+/* CSS for popup coupon page */
+
+.white-box {
+	width: 90%;
+	height: 18rem;
+	background-color: white;
+}
+
+.white-box-barcode {
+	width: 90%;
+	height: 15rem;
+	background-color: white;
+}
+
+.white-box-radius {
+	width: 90%;
+	height: 6rem;
+	border-radius: 2rem;
+	background-color: white;
+}
+
+.coupon-pop-box {
+	border-radius: 2rem;
+	background-color: #ffea91;
+}
+
+.pro-hilight {
+	border-radius: 1rem;
+	width: 90%;
+	font-size: 1.2rem;
+}
+
+.hilight-red {
+	background-color: #f94048;
+	color: white;
+	padding: 6px;
+}
+
+/* Set width and height of elements */
+
+.full-width {
+	width: 100%;
+	min-width: 100%;
+}
+
+.full-height {
+	height: 100%;
+	min-height: 100%;
+}
+
+.full-both {
+	width: 100%;
+	min-width: 100%;
+	height: 100%;
+	min-height: 100%;
+}
