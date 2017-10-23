@@ -1,0 +1,31 @@
+page-exhibition {
+	.exhibit-slides {
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		width: 20%; 
+		height: 100%;
+	}
+	.exhibit-contain {
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		width: 79%; 
+		height: 100%; 
+		padding: 0.5rem;
+	}
+	.exhibit-info {
+		text-align: left; 
+		padding: 1rem; 
+		border-bottom: 1px solid #dedede; 
+		line-height: 140%;
+		vertical-align: top;
+	}
+	.exhibit-title {
+		padding: 4px; 
+		text-align: center; 
+		height: 5%; 
+		width: 100%;
+		vertical-align: middle;
+	}
+}

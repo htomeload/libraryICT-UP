@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 
@@ -15,5 +15,4 @@ export class WelcomePage {
 	start() {
 		this.navCtrl.setRoot(HomePage);
 	}
-
 }

@@ -1,0 +1,12 @@
+page-bookinfo {
+	.col-info {
+		padding: 1rem; 
+		flex-basis: unset; 
+		-webkit-flex-basis: unset;
+	}
+	.book-info {
+		padding-bottom: 2px; 
+		border-bottom: 1px solid #dedede; 
+		line-height: 160%;
+	}
+}

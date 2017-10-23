@@ -15,38 +15,47 @@
 			</ion-row>
 		</ion-grid>
   	</ion-navbar>
-</ion-header>
-
-<ion-content>
-	<ion-item>
-		<ion-grid>
-			<ion-row style="height: 30%;">
+	<ion-navbar class="no-padding">
+      	<ion-grid>
+			<ion-row>
 				<ion-col class="full-both align-center">
 					<ion-grid>
 						<ion-row>
-							<ion-col class="align-center">
-								<ion-icon name="md-arrow-dropleft" ></ion-icon>
+							<ion-col class="align-center" (click)="goPage('news')">
+								<ion-icon name="md-arrow-dropleft"></ion-icon>
 							</ion-col>
 							<ion-col class="align-center">
 								<h3 style="font-size: 2rem;">New Book</h3>
 							</ion-col>
-							<ion-col class="align-center">
-								<ion-icon name="md-arrow-dropright" ></ion-icon>
+							<ion-col class="align-center" (click)="goPage('book')">
+								<ion-icon name="md-arrow-dropright"></ion-icon>
 							</ion-col>
 						</ion-row>
 					</ion-grid>
 				</ion-col>
 			</ion-row>
 		</ion-grid>
-	</ion-item>
-	<br />
-	{{error}}
-	<div style="height: 30%; width: 50%;" class="align-center">
-		<img [src]="featured"/>
+  	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-refresher (ionRefresh)="reload($event)">
+		<ion-refresher-content
+		pullingIcon="md-circles"
+		pullingText="ดึงลงเพื่อโหลดข้อมูลใหม่"
+		refreshingSpinner="md-circles"
+		refreshingText="กำลังดึงข้อมูลจากเซิฟเวอร์...">
+		</ion-refresher-content>
+	</ion-refresher>
+	<h4 *ngIf="error">{{error}}</h4>
+	<div *ngIf="featured && featured.length > 0" class="align-center book-featured">
+		<img [src]="featured[0].img" style="width:30%; height: 100%;" (click)="popfeaturedbook(featured[0].index);" />
 	</div>
-	<br /><br />
-	<img *ngFor="let x of data" [src]="x.img" style="display: inline-block; margin: 1%; width: 30%; height: 30%;" />
-	<!--
+	<img *ngFor="let x of data" [src]="x.img" class="book-inrow" (click)="popbook(x.index);" />
+	<!---<br /><br />
+	<div style="height: 30%; width: 50%;" class="align-center">
+		<img src="assets/nb/jn3262.jpg" style="height: 95%;" />
+	</div>
 	<img src="assets/nb/1302025939_pcgamer.jpg" style="display: inline-block; margin: 1%; width: 30%; height: 30%;" />
 	<img src="assets/nb/cover036.jpg" style="display: inline-block; margin: 1%; width: 30%; height: 30%;" />
 	<img src="assets/nb/Cover.jpg" style="display: inline-block; margin: 1%; width: 30%; height: 30%;" />

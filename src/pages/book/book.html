@@ -1,0 +1,69 @@
+<ion-header>
+  	<ion-navbar class="no-padding">
+      	<ion-grid class="nav-bar">
+			<ion-row>
+				<ion-col>
+					<button class="icon-menu override-button-inner text-left full-width nav-bar" menuToggle>
+						<ion-icon name="menu"></ion-icon>
+					</button>
+				</ion-col>
+				<ion-col class="text-menu align-center" style="-webkit-flex: 3;">
+					<div style="width: 100%; transform: translate(-16%,0%);">
+						หนังสือบนชั้น
+					</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+  	</ion-navbar>
+	<ion-navbar class="no-padding">
+      	<ion-grid>
+			<ion-row>
+				<ion-col class="full-both align-center">
+					<ion-grid>
+						<ion-row>
+							<ion-col class="align-center" (click)="goPage('newbook')">
+								<ion-icon name="md-arrow-dropleft"></ion-icon>
+							</ion-col>
+							<ion-col class="align-center">
+								<h3 style="font-size: 2rem;">Recommend Book</h3>
+							</ion-col>
+							<ion-col class="align-center" (click)="goPage('software')">
+								<ion-icon name="md-arrow-dropright"></ion-icon>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+  	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-refresher (ionRefresh)="reload($event)">
+		<ion-refresher-content
+		pullingIcon="md-circles"
+		pullingText="ดึงลงเพื่อโหลดข้อมูลใหม่"
+		refreshingSpinner="md-circles"
+		refreshingText="กำลังดึงข้อมูลจากเซิฟเวอร์...">
+		</ion-refresher-content>
+	</ion-refresher>
+	<h5 *ngIf="error">{{error}}</h5>
+  	<div *ngIf="error == ''" class="book-selected-contain">
+		<div class="book-selected-img">
+			<img [src]="select[0].img" class="img-selected-book" />
+		</div>
+		<div class="book-selected-info book-info">
+			<h5>{{select[0].name}}</h5>
+			<div style="font-size: 2rem;">
+				{{select[0].detail}}
+			</div>
+		</div>
+	</div>
+	<div *ngIf="error == ''" style="width: 100%; height: 40%;">
+		<ion-slides autoplay="3000" loop="true" pager="true" slidesPerView="3" spaceBetween="4">
+			<ion-slide *ngFor="let book of data" (click)="selectThis(book.index)">
+				<img [src]="book.img" style="position: relative; width: auto; height: 85%;" />
+			</ion-slide>
+		</ion-slides>
+	</div>
+</ion-content>

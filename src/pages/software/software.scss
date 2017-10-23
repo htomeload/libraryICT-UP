@@ -1,0 +1,13 @@
+page-software {
+	.software-row {
+		height: 30%;
+		width: 100%;
+		margin-bottom: 1.3rem;
+	}
+	.software-title {
+		margin: 0px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}

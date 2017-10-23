@@ -1,0 +1,43 @@
+<ion-header>
+  	<ion-navbar class="no-padding">
+      	<ion-grid class="nav-bar">
+			<ion-row>
+				<ion-col class="text-menu align-center" style="-webkit-flex: 3;">
+					<div style="width: 100%; transform: translate(-5%, 30%);">
+						ข้อมูลหนังสือ
+					</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+  	</ion-navbar>
+</ion-header>
+
+<ion-content>
+  	<div class="align-center inline" style="width: 100%; height: 60%; padding: 0.5rem; margin-bottom: 0.5rem;">
+		<img [src]="data.img" style="width: 60%; height: 100%;" />
+	</div>
+	<div class="inline" style="width: 100%; height: 10%; padding: 0.5rem;">
+		<div class="inline" style="width: 29%; padding: 0.5rem; vertical-align: middle; text-align: right;">
+			ชื่อหนังสือ : 
+		</div>
+		<div class="inline book-info" style="width: 69%; padding: 0.5rem;">
+			{{data.name}}
+		</div>
+	</div>
+	<div class="inline" style="width: 100%; height: 10%; padding: 0.5rem;">
+		<div class="inline" style="width: 29%; padding: 0.5rem; vertical-align: middle; text-align: right;">
+			คำอธิบาย : 
+		</div>
+		<div class="inline book-info" style="width: 69%; padding: 0.5rem;">
+			{{data.detail}}
+		</div>
+	</div>
+	<div class="inline" style="width: 100%; height: 10%; padding: 0.5rem;">
+		<div class="inline" style="width: 29%; padding: 0.5rem; vertical-align: middle; text-align: right;">
+			ชั้นวาง : 
+		</div>
+		<div class="inline book-info" style="width: 69%; padding: 0.5rem;">
+			{{data.lineshelf}}
+		</div>
+	</div>
+</ion-content>

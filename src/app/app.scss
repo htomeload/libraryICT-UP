@@ -1,6 +1,12 @@
 // http://ionicframework.com/docs/theming/
 
 /* Override default ionic's css rules */
+.slide-zoom {
+	position: relative !important;
+	width: 100% !important;
+	height: 100% !important;
+}
+
 .tabbar {
 	background-color: #42388c !important;
 	.tab-button-icon {

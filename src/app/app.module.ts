@@ -12,13 +12,21 @@ import { SearchPage } from '../pages/search/search';
 import { GuidemapPage } from '../pages/guidemap/guidemap';
 import { RewardPage } from '../pages/reward/reward';
 import { YourrewardPage } from '../pages/yourreward/yourreward';
+import { MoviePage } from '../pages/movie/movie';
+import { NewsPage } from '../pages/news/news';
+import { BookInfoPage } from '../pages/bookinfo/bookinfo';
+import { BookPage } from '../pages/book/book';
+import { ExhibitionPage } from '../pages/exhibition/exhibition';
+import { TechnologyPage } from '../pages/technology/technology';
+import { SoftwarePage } from '../pages/software/software';
 
-/*import { BLE } from '@ionic-native/ble';
+import { BLE } from '@ionic-native/ble';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-import { Geolocation } from '@ionic-native/geolocation';
 import { Toast } from '@ionic-native/toast';
-import { LocationAccuracy } from '@ionic-native/location-accuracy';*/
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { IBeacon } from '@ionic-native/ibeacon';
+import { EstimoteBeacons } from '@ionic-native/estimote-beacons';
 
 @NgModule({
   	declarations: [
@@ -30,6 +38,13 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';*/
 		GuidemapPage,
 		RewardPage,
 		YourrewardPage,
+		MoviePage,
+		NewsPage,
+		BookInfoPage,
+		BookPage,
+		ExhibitionPage,
+		TechnologyPage,
+		SoftwarePage,
   	],
   	imports: [
     	BrowserModule,
@@ -45,16 +60,24 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';*/
 		GuidemapPage,
 		RewardPage,
 		YourrewardPage,
+		MoviePage,
+		NewsPage,
+		BookInfoPage,
+		BookPage,
+		ExhibitionPage,
+		TechnologyPage,
+		SoftwarePage,
   	],
   	providers: [
     	StatusBar,
     	SplashScreen,
-		/*BLE,
+		BLE,
 		Toast,
 		BackgroundMode,
 		LocalNotifications,
-		Geolocation,
-		LocationAccuracy,*/
+		LocationAccuracy,
+		IBeacon,
+		EstimoteBeacons,
     	{provide: ErrorHandler, useClass: IonicErrorHandler}
   	]
 })
