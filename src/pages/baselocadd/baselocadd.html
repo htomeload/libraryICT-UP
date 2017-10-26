@@ -1,0 +1,50 @@
+<ion-header>
+  	<ion-navbar class="no-padding">
+      	<ion-grid class="nav-bar">
+			<ion-row>
+				<ion-col class="text-menu align-center" style="-webkit-flex: 3;">
+					<div style="width: 100%; transform: translate(-5%, 30%);">
+						กำหนดสถานที่
+					</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+  	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-refresher (ionRefresh)="reload($event)">
+		<ion-refresher-content
+		pullingIcon="md-circles"
+		pullingText="ดึงลงเพื่อโหลดข้อมูลใหม่"
+		refreshingSpinner="md-circles"
+		refreshingText="กำลังดึงข้อมูลจากเซิฟเวอร์...">
+		</ion-refresher-content>
+	</ion-refresher>
+	<div style="width: 100%; text-align: center; margin-top: 1.5rem;" *ngIf="loading">
+		<ion-spinner name="dots" style="margin: auto;"></ion-spinner>
+		<br /><br />
+		<h3>กำลังตรวจสอบรายการ</h3>
+		<br />
+	</div>
+	<div *ngIf="baseloc && !loading">
+		<br /><br />
+	</div>
+	<ion-item *ngIf="baseloc && !loading">
+		<ion-label>เลือกสถานที่</ion-label>
+		<ion-select [(ngModel)]="choice">
+			<ion-option value="">รายการ</ion-option>
+			<ion-option [value]="s.value" *ngFor="let s of baseloc">{{s.name}}</ion-option>
+		</ion-select>
+	</ion-item>
+	<h2 *ngIf="baseloc && !loading" style="line-height: 3rem; padding: 1.5rem; width: 100%; text-align: center;">หรือ</h2>
+	<br *ngIf="!baseloc && !loading" />
+	<h3 *ngIf="!baseloc && !loading" style="width: 100%; text-align: center;">ไม่พบรายการ</h3>
+	<ion-item>
+		<ion-label color="primary" floating>เพิ่มชื่อสถานที่</ion-label>
+		<ion-input [(ngModel)]="nameplace"></ion-input>
+ 	</ion-item>
+	<div style="width: 100%; padding: 1rem; margin-top: 2rem;">
+		<button ion-button block (click)="chosenIt()">บันทึกสถานที่</button>
+	</div>
+</ion-content>

@@ -19,6 +19,12 @@ import { BookPage } from '../pages/book/book';
 import { ExhibitionPage } from '../pages/exhibition/exhibition';
 import { TechnologyPage } from '../pages/technology/technology';
 import { SoftwarePage } from '../pages/software/software';
+import { AdminloginPage } from '../pages/adminlogin/adminlogin';
+import { BeaconaddPage } from '../pages/beaconadd/beaconadd';
+import { BeaconrangPage } from '../pages/beaconrang/beaconrang';
+import { BaselocaddPage } from '../pages/baselocadd/baselocadd';
+import { LocaddPage } from "../pages/locadd/locadd";
+import { LandadderPage } from "../pages/landadder/landadder";
 
 import { BLE } from '@ionic-native/ble';
 import { BackgroundMode } from '@ionic-native/background-mode';
@@ -26,7 +32,6 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Toast } from '@ionic-native/toast';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { IBeacon } from '@ionic-native/ibeacon';
-import { EstimoteBeacons } from '@ionic-native/estimote-beacons';
 
 @NgModule({
   	declarations: [
@@ -45,6 +50,12 @@ import { EstimoteBeacons } from '@ionic-native/estimote-beacons';
 		ExhibitionPage,
 		TechnologyPage,
 		SoftwarePage,
+		AdminloginPage,
+		BeaconaddPage,
+		BeaconrangPage,
+		BaselocaddPage,
+		LocaddPage,
+		LandadderPage,
   	],
   	imports: [
     	BrowserModule,
@@ -67,6 +78,12 @@ import { EstimoteBeacons } from '@ionic-native/estimote-beacons';
 		ExhibitionPage,
 		TechnologyPage,
 		SoftwarePage,
+		AdminloginPage,
+		BeaconaddPage,
+		BeaconrangPage,
+		BaselocaddPage,
+		LocaddPage,
+		LandadderPage,
   	],
   	providers: [
     	StatusBar,
@@ -77,7 +94,6 @@ import { EstimoteBeacons } from '@ionic-native/estimote-beacons';
 		LocalNotifications,
 		LocationAccuracy,
 		IBeacon,
-		EstimoteBeacons,
     	{provide: ErrorHandler, useClass: IonicErrorHandler}
   	]
 })

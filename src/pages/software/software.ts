@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController, Events } from 'ionic-angular';
+import { NavController, LoadingController, Events } from 'ionic-angular';
 
 import { BookPage } from '../book/book';
 import { ExhibitionPage } from '../exhibition/exhibition';
@@ -92,7 +92,7 @@ export class SoftwarePage {
 	}
 
 	loadContent(){
-		let sdata: any;
+		//let sdata: any;
 		let loading = this.loadingCtrl.create({
 			spinner: 'dots',
 			content: 'Loading Please Wait...'

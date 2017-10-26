@@ -16,12 +16,11 @@ import { TechnologyPage } from '../pages/technology/technology';
 import { SoftwarePage } from '../pages/software/software';
 
 import { LocalNotifications } from '@ionic-native/local-notifications';
-import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { BackgroundMode } from '@ionic-native/background-mode';
-import { BLE } from '@ionic-native/ble';
 import { Toast } from '@ionic-native/toast';
+import { BLE } from '@ionic-native/ble';
 import { IBeacon } from '@ionic-native/ibeacon';
-import { EstimoteBeacons } from '@ionic-native/estimote-beacons';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 @Component({
   	templateUrl: 'app.html'
@@ -36,13 +35,13 @@ export class MyApp {
 	private rc: number;
 	private active: boolean;
 	private scanres: Array<{id: string, uuid?: string, major?: number, minor?: number, meter?: number}>;
+	private ragged: Array<{identifier: string, uuid: string, major?: number, minor?: number, tried?: number}>;
 	private checkBGDelay: number;
-	private ragged: any;
 	private special: boolean;
 
 	constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private alertCtrl: AlertController, 
 				private locationAccuracy: LocationAccuracy, private ble: BLE, public events: Events, private backgroundMode: BackgroundMode, 
-			   	private localNotifications: LocalNotifications, private toast: Toast, private ibeacon: IBeacon, private eb: EstimoteBeacons) {
+			   	private localNotifications: LocalNotifications, private toast: Toast, private ibeacon: IBeacon) {
 		
 		// initial some property.
 		this.rc = 0;
@@ -287,63 +286,102 @@ export class MyApp {
 	ragging(){
 		if (typeof this.scanres !== 'undefined'){
 			console.log("Preparing to monitor beacon.");
-			
 			// Create instance beacon region
 			if (typeof this.scanres[0] !== 'undefined'){
-				this.ragged = this.ibeacon.BeaconRegion(this.scanres[0].id, this.scanres[0].uuid, this.scanres[0].major, this.scanres[0].minor);
+				for(let i = 0; i < this.scanres.length; i++){
+					let rangged: any;
+					
+					if (!this.ragged || i === 0){
+						this.ragged = [{
+							identifier: this.scanres[i].id, 
+							uuid: this.scanres[i].uuid,
+							major: this.scanres[i].major,
+							minor: this.scanres[i].minor
+						}];
+						rangged = this.ibeacon.BeaconRegion(this.scanres[i].id, this.scanres[i].uuid, this.scanres[i].major, this.scanres[i].minor);
+					}else{
+						this.ragged.push({
+							identifier: this.scanres[i].id, 
+							uuid: this.scanres[i].uuid,
+							major: this.scanres[i].major,
+							minor: this.scanres[i].minor
+						});
+						rangged = this.ibeacon.BeaconRegion(this.scanres[i].id, this.scanres[i].uuid, this.scanres[i].major, this.scanres[i].minor);
+					}
+
+					console.log("Got beacon region : "+JSON.stringify(rangged));
+
+					// Start ragging beacon
+					this.ibeacon.startRangingBeaconsInRegion(rangged).then(
+						() => console.log('Native layer recieved the request to ragging'),
+						error => console.error('Native layer failed to begin ragging: ', error)
+					);
+
+					let delegate = this.ibeacon.Delegate();
+
+					// Detect for ragged beacon in region
+					delegate.didRangeBeaconsInRegion().subscribe(
+						data => {
+							if (data.beacons.length > 0){
+								console.log("Ragging found!");
+								console.log("data is "+JSON.stringify(data));
+
+								// Calculation meter from ragged data
+								let meter: number = (data.beacons[0].tx*data.beacons[0].accuracy)/data.beacons[0].rssi;
+
+								console.log("Beacon "+data.region.identifier+" is far about "+parseFloat(meter.toFixed(2))+" meter");
+
+								// Stop ragging for beacon
+								this.ibeacon.stopRangingBeaconsInRegion(rangged);
+
+								console.log("Stop ragging for beacon "+data.region.identifier);
+
+								// Set meter to right avaliable collected beacon
+								for(let j = 0; j < this.scanres.length; j++){
+									if (this.scanres[j].id === data.region.identifier){
+										this.scanres[j].meter = parseFloat(meter.toFixed(2));
+
+										console.log("Got correct ID with ragged beacon");
+										
+										console.log("Start loadContent() method");
+										this.loadContent();
+									}
+								}
+							}else{
+								if (typeof this.ragged[i].tried === "undefined"){
+									this.ragged[i].tried = 1;
+								}else{
+									this.ragged[i].tried += 1;
+								}
+								
+								console.log("Tried "+this.ragged[i].tried+" time(s) for ragging beacon "+data.region.identifier);
+								
+								if (this.ragged[i].tried > 9){
+									for(let j = 0; j < this.scanres.length; j++){
+										if (this.scanres[j].id === data.region.identifier){
+											this.scanres[j].meter = 9999;
+
+											console.log("Got correct ID with ragged beacon");
+											
+											console.log("Terminate failed ragging beacon "+data.region.identifier);
+											this.ibeacon.stopRangingBeaconsInRegion(rangged);
+											
+											console.log("Start loadContent() method");
+											this.loadContent();
+										}
+									}
+								}
+							}
+						},
+						error => console.log(error),
+					);
+				}
 			}else{
 				console.log("typeof this.scanres[0] is undefined");
 				console.log("Start scanble() method");
 				
 				return this.scanble();
 			}
-			
-			console.log("Got beacon region : "+JSON.stringify(this.ragged));
-			
-			// Start ragging beacon
-			this.ibeacon.startRangingBeaconsInRegion(this.ragged).then(
-				() => console.log('Native layer recieved the request to ragging'),
-				error => console.error('Native layer failed to begin ragging: ', error)
-			);
-			
-			let delegate = this.ibeacon.Delegate();
-			
-			// Detect for ragged beacon in region
-			delegate.didRangeBeaconsInRegion().subscribe(
-				data => {
-					if (data.beacons.length > 0){
-						console.log("Ragging found!");
-						console.log("data is "+JSON.stringify(data));
-						
-						// Calculation meter from ragged data
-						let meter: number = (data.beacons[0].tx*data.beacons[0].accuracy)/data.beacons[0].rssi;
-
-						console.log("Beacon "+data.region.identifier+" is far about "+parseFloat(meter.toFixed(2))+" meter");
-						
-						// Stop ragging for beacon
-						this.ibeacon.stopRangingBeaconsInRegion(this.ragged);
-						
-						console.log("Stop ragging for beacon "+data.region.identifier);
-						
-						// Set meter to right avaliable collected beacon
-						if (typeof this.scanres[0] !== "undefined"){
-							if (this.scanres[0].id === data.region.identifier){
-								this.scanres[0].meter = parseFloat(meter.toFixed(2));
-								
-								console.log("Got correct ID with ragged beacon");
-								console.log("Start loadContent() method");
-								this.loadContent();
-							}
-						}else{ // ---> No beacon to set meter value
-							console.log("typeof this.scanres[0] is undefined");
-							console.log("Start loadContent() method");
-							
-							this.loadContent();
-						}
-					}
-				},
-				error => console.log(error),
-			);
 			
 		}else{ // ---> No beacon for ragging
 			console.log("typeof this.scanres[0] is undefined");
@@ -379,7 +417,33 @@ export class MyApp {
 			});
 
 			xhr.onreadystatechange = result;
-			xhr.send("id="+this.scanres[0].id+"&meter="+this.scanres[0].meter); // ---> Sending request
+			let minmeter: number;
+			let minid: string;
+			
+			for(let i = 0; i < this.scanres.length; i++){
+				if (typeof this.scanres[i].meter === "undefined"){
+					console.log("Ranging is not finish all job");
+					console.log("Terminate loadcontent()");
+					return;
+				}
+				
+				if (i === 0){
+					minmeter = this.scanres[i].meter;
+					minid = this.scanres[i].id;
+				}else{
+					if (this.scanres[i].meter < minmeter){
+						minmeter = this.scanres[i].meter;
+						minid = this.scanres[i].id;
+					}
+				}
+			}
+			
+			if (typeof minmeter === "undefined"){
+				minmeter = this.scanres[0].meter;
+				minid = this.scanres[0].id;
+			}
+			
+			xhr.send("id="+minid+"&meter="+minmeter); // ---> Sending request
 			console.log("Send request to server with param: id="+this.scanres[0].id+"&meter="+this.scanres[0].meter);
 			
 			// Set value to initial value

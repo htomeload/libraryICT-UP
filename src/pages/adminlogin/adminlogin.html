@@ -1,0 +1,28 @@
+<ion-header>
+  	<ion-navbar class="no-padding">
+      	<ion-grid class="nav-bar">
+			<ion-row>
+				<ion-col class="text-menu align-center" style="-webkit-flex: 3;">
+					<div style="width: 100%; transform: translate(-5%, 30%);">
+						ยืนยันตัวตน
+					</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+  	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<h2 style="width: 100%; padding: 1.5rem;">Admins Auth</h2>
+	<ion-item>
+		<ion-label color="primary" floating>Username&nbsp;:&nbsp;</ion-label>
+		<ion-input [(ngModel)]="username"></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-label color="primary" floating>Password&nbsp;:&nbsp;</ion-label>
+		<ion-input [(ngModel)]="password" type="password"></ion-input>
+	</ion-item>
+	<ion-item>
+		<button ion-button block (click)="auth()">Login</button>
+	</ion-item>
+</ion-content>
