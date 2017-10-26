@@ -62,6 +62,7 @@ export class AdminloginPage {
 							text: "รับทราบ",
 							handler: () => {
 								if (v.success){
+									localStorage.setItem("staffid", v.staffid);
 									this.navCtrl.push(BeaconaddPage);
 								}else{
 									this.navCtrl.setRoot(WelcomePage);

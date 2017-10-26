@@ -24,7 +24,7 @@ export class LandadderPage {
 		let loc = this.navParams.get("loc");
 		let choicer = this.navParams.get("choicer");
 		
-		this.v = {id: id, meter: meter, baseloc: baseloc, loc: loc, choicer: choicer, staffid: 1};
+		this.v = {id: id, meter: meter, baseloc: baseloc, loc: loc, choicer: choicer, staffid: parseInt(localStorage.getItem("staffid"))};
   	}
 	
 	ionViewWillLeave(){
@@ -98,6 +98,7 @@ export class LandadderPage {
 						{
 							text: "รับทราบ",
 							handler: () => {
+								localStorage.removeItem("staffid");
 								this.navCtrl.setRoot(WelcomePage);
 							}
 						}
