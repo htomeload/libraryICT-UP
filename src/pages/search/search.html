@@ -1,5 +1,12 @@
 <ion-header>
 	<div class="search-suggest-wrapper">
+		<div *ngIf="match">
+			<div *ngIf="match.length > 0 && word.length > 0">
+				<ion-item *ngIf="word !== match[0].fullword" (click)="chooseword(word)">
+					<p style="display: inline-block;">{{word}}</p>
+				</ion-item>
+			</div>
+		</div>
 		<ion-item *ngFor="let m of match" (click)="chooseword(m.fullword)">
 			<p style="display: inline-block;">{{m.firstnon}}</p>
 			<p style="display: inline-block;" class="matchword">{{m.word}}</p>
@@ -38,16 +45,16 @@
 			<ion-row style="max-height: 100%;">
 				<ion-col style="width: 50%;">
 					<ion-label style="max-width: 42%; width: 42%; max-height: 100%; margin: 0rem; padding: 0rem;" class="inline">ค้นหา</ion-label>
-					<ion-select [(ngModel)]="type" style="max-width: 42%; max-height: 100%; margin: 0rem; padding: 0rem; text-overflow: ellipsis;" class="inline">
+					<ion-select [(ngModel)]="type" [selectOptions]="typesearch" (ngModelChange)="changeoptions()" style="max-width: 42%; max-height: 100%; margin: 0rem; padding: 0rem; text-overflow: ellipsis;" class="inline">
 						<ion-option value="name" selected>ชื่อหนังสือ</ion-option>
 						<ion-option value="code">รหัสหนังสือ</ion-option>
 					</ion-select>
 				</ion-col>
 				<ion-col style="width: 50%;">
 					<ion-label style="max-width: 42%; width: 42%; max-height: 100%; margin: 0rem; padding: 0rem;" class="inline">เรียงจาก</ion-label>
-					<ion-select [(ngModel)]="order" style="max-width: 42%; max-height: 100%; width: 42%; margin: 0rem; padding: 0rem; text-overflow: ellipsis;" class="inline">
-						<ion-option value="ASC" selected>ใหม่ไปเก่า</ion-option>
-						<ion-option value="DESC">เก่าไปใหม่</ion-option>
+					<ion-select [(ngModel)]="order" [selectOptions]="ordersearch" (ngModelChange)="changeoptions()" style="max-width: 42%; max-height: 100%; width: 42%; margin: 0rem; padding: 0rem; text-overflow: ellipsis;" class="inline">
+						<ion-option value="DESC" selected>ใหม่ไปเก่า</ion-option>
+						<ion-option value="ASC">เก่าไปใหม่</ion-option>
 					</ion-select>
 				</ion-col>
 			</ion-row>

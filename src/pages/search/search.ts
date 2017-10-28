@@ -14,6 +14,8 @@ export class SearchPage {
 	private result: Array<{title: string, id: number, callno?: string, shelfline?: string}>;
 	private indexer: Array<{title: string}>;
 	private match: Array<{word: string, firstnon: string, lastnon: string, fullword: string}>;
+	private typesearch: {title: string};
+	private ordersearch: {title: string};
 	
   	constructor(public navCtrl: NavController, private events: Events, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
 		this.events.publish("deactivate");
@@ -21,6 +23,9 @@ export class SearchPage {
 		this.word = "";
 		this.type = "name";
 		this.order = "DESC";
+		
+		this.typesearch = {title: "ค้นหา"};
+		this.ordersearch = {title: "ค้นหา"};
 		
 		setTimeout(() => {
 			if (!this.indexer){
@@ -118,6 +123,20 @@ export class SearchPage {
 	chooseword(fullword) {
 		this.word = fullword;
 		this.match.length = 0;
+	}
+
+	changeoptions() {
+		if (this.word.length < 1){
+			return;
+		}else{
+			if (typeof this.result === "undefined"){
+				return;
+			}else if (this.result.length < 1){
+				return;
+			}
+		}
+		
+		return this.searching();
 	}
 
 	searching() {
