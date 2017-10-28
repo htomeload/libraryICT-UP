@@ -101,13 +101,13 @@ export class BaselocaddPage {
 					if (!this.baseloc){
 						this.baseloc = [{
 							index: 0,
-							name: i.toString(),
+							name: val[i].baselocation_name,
 							value: val[i].baselocation_id,
 						}];
 					}else{
 						this.baseloc.push({
 							index: this.baseloc.length,
-							name: i.toString(),
+							name: val[i].baselocation_name,
 							value: val[i].baselocation_id,
 						});
 					}

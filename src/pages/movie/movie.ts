@@ -17,7 +17,7 @@ export class MoviePage {
 	
   	constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private events: Events) {
 		//this.loadContent();
-		this.featured = "assets/m/f.png";
+		this.featured = "assets/m/f.jpg";
 		this.title = "The Social Network";
 		this.data = [
 			{

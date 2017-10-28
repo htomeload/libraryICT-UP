@@ -17,7 +17,7 @@
 	<div style="width: 100%; text-align: center; margin-top: 1.5rem;" *ngIf="!meter">
 		<ion-spinner name="circles" style="margin: auto;"></ion-spinner>
 	</div>
-	<h1 style="padding: 1.5rem; width: 100%; text-align: center;" *ngIf="meter">{{meter}}<br /><br />เมตร</h1>
+	<h1 style="padding: 1.5rem; width: 100%; text-align: center;" *ngIf="meter">{{lastfour}}<br /><br />{{meter}}<br /><br />เมตร</h1>
 	<div style="width: 100%; padding: 1rem; margin-top: 2rem;">
 		<button ion-button block (click)="chosenIt(meter)" *ngIf="meter">บันทึกระยะ</button>
 	</div>

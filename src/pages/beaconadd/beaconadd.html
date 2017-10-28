@@ -14,6 +14,7 @@
 
 <ion-content>
 	<ion-item *ngFor="let b of scanres" (click)="chosenIt(b.index)">
+		<p>NAME&nbsp;:&nbsp;{{b.lastfour}}</p><br />
 		<p>ID&nbsp;:&nbsp;{{b.id}}</p><br />
 		<p>UUID&nbsp;:&nbsp;{{b.uuid}}</p><br />
 		<p style="width: 49%; display: inline-block;">Major&nbsp;:&nbsp;{{b.major}}</p>

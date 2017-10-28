@@ -11,9 +11,10 @@ import { IBeacon } from '@ionic-native/ibeacon';
 })
 export class BeaconrangPage {
 	
-	private beacon: {identifier: string, uuid?: string, major?: number, minor?: number};
+	private beacon: {identifier: string, uuid?: string, major?: number, minor?: number, lastfour?: string};
 	private rangged: any;
 	public meter: number;
+	public lastfour: string;
 	
   	constructor(public navCtrl: NavController, private events: Events, private ibeacon: IBeacon, public alertCtrl: AlertController, 
 			    private navParams: NavParams){
@@ -25,7 +26,9 @@ export class BeaconrangPage {
 			uuid: v.uuid,
 			major: v.major,
 			minor: v.minor,
+			lastfour: v.lastfour,
 		}
+		this.lastfour = v.lastfour;
 		
 		this.ragging();
   	}

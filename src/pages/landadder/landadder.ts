@@ -9,8 +9,8 @@ import { WelcomePage } from "../welcome/welcome";
 })
 export class LandadderPage {
 	
-	private v: {id: string, meter: number, baseloc: string, loc: string, choicer: string, staffid?: number};
-	private beacon: {identifier: string, uuid?: string, major?: number, minor?: number};
+	private v: {id: string, meter: number, baseloc: string, loc: string, choicer: string, staffid?: number, lastfour?: string};
+	private beacon: {identifier: string, uuid?: string, major?: number, minor?: number, lastfour?: string};
 	
   	constructor(public navCtrl: NavController, private events: Events, public alertCtrl: AlertController, private navParams: NavParams, 
 			    public loadingCtrl: LoadingController){
@@ -23,8 +23,9 @@ export class LandadderPage {
 		let baseloc = this.navParams.get("baseloc");
 		let loc = this.navParams.get("loc");
 		let choicer = this.navParams.get("choicer");
+		let lastfour = this.beacon.lastfour;
 		
-		this.v = {id: id, meter: meter, baseloc: baseloc, loc: loc, choicer: choicer, staffid: parseInt(localStorage.getItem("staffid"))};
+		this.v = {id: id, meter: meter, baseloc: baseloc, loc: loc, choicer: choicer, staffid: parseInt(localStorage.getItem("staffid")), lastfour: lastfour};
   	}
 	
 	ionViewWillLeave(){

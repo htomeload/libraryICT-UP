@@ -11,7 +11,7 @@ import { BLE } from '@ionic-native/ble';
 })
 export class BeaconaddPage {
 	
-	private scanres: Array<{index: number, id: string, uuid?: string, major?: number, minor?: number}>;
+	private scanres: Array<{index: number, id: string, uuid?: string, major?: number, minor?: number, lastfour?: string}>;
 	private active: boolean;
 	
   	constructor(public navCtrl: NavController, private events: Events, private ble: BLE, public alertCtrl: AlertController, public loadingCtrl: LoadingController){
@@ -27,7 +27,7 @@ export class BeaconaddPage {
 	chosenIt(index){
 		const alert = this.alertCtrl.create({
 			title: "เลือกรายการนี้ ?",
-			message: this.scanres[index].id,
+			message: "NAME&nbsp;:&nbsp;"+this.scanres[index].lastfour+"<br /><br />ID&nbsp;:&nbsp;"+this.scanres[index].id,
 			buttons: [
 				{
 					text: "ตกลง",
@@ -138,6 +138,12 @@ export class BeaconaddPage {
 		let minor: string = ((buffer[27] & 0xff) * 0x100 + (buffer[28] & 0xff)).toString();
 		return parseInt(minor); // ---> return value as integer.
 	}
+
+	getlastfour(id){
+		let array = id.split(":");
+		
+		return array[4].toString()+array[5].toString();
+	}
 	
 	scanble() {
 		// Scan for beacon
@@ -146,6 +152,7 @@ export class BeaconaddPage {
 			let uuid: string = result.advertising? this.buffertouuid(result.advertising):"";
 			let major: number = result.advertising? this.getmajor(new Uint8Array(result.advertising)):0;
 			let minor: number = result.advertising? this.getminor(new Uint8Array(result.advertising)):0;
+			let lastfour: string = this.getlastfour(id);
 
 			if (typeof this.scanres === 'undefined'){ // If for calling method in first time.
 				this.scanres = [{
@@ -154,6 +161,7 @@ export class BeaconaddPage {
 					uuid: uuid,
 					major: major,
 					minor: minor,
+					lastfour: lastfour,
 				}];
 				console.log("Gaining first beacon "+JSON.stringify(result));
 			}else if (this.scanres.length === 0){ // If for calling method first time in repeatly.
@@ -163,6 +171,7 @@ export class BeaconaddPage {
 					uuid: uuid,
 					major: major,
 					minor: minor,
+					lastfour: lastfour,
 				}];
 				console.log("Gaining first beacon with length = 0 "+JSON.stringify(result));
 			}else{ // ---> Check in case of duplicate collected beacon
@@ -177,6 +186,7 @@ export class BeaconaddPage {
 							uuid: uuid,
 							major: major,
 							minor: minor,
+							lastfour: lastfour,
 						});
 						console.log("Gaining another beacon "+JSON.stringify(result));
 					}
