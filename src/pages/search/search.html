@@ -1,5 +1,10 @@
 <ion-header>
 	<div class="search-suggest-wrapper">
+		<ion-item *ngIf="suggestloading">
+			<div style="width: 100%; text-align: center;" *ngIf="!meter">
+				<ion-spinner name="circles" style="margin: auto;"></ion-spinner>
+			</div>
+		</ion-item>
 		<div *ngIf="match">
 			<div *ngIf="match.length > 0 && word.length > 0">
 				<ion-item *ngIf="word !== match[0].fullword" (click)="chooseword(word)">
@@ -12,6 +17,13 @@
 			<p style="display: inline-block;" class="matchword">{{m.word}}</p>
 			<p style="display: inline-block;">{{m.lastnon}}</p>
 		</ion-item>
+		<div style="position: -webkit-sticky; position: sticky; bottom: 0px;">
+			<div *ngIf="match">
+				<div *ngIf="match.length > 0 && word.length > 0">
+					<div class="border-bottom"></div>
+				</div>
+			</div>
+		</div>
 	</div>
   	<ion-navbar class="no-padding">
       	<ion-grid class="nav-bar">

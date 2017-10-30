@@ -59,16 +59,7 @@ export class MyApp {
 		];
 		
 		// requires user to enable OS service once time.
-		this.locationAccuracy.canRequest().then((canRequest: boolean) => { // ---> request GPS service.
-			if(canRequest) {
-				// the accuracy option will be ignored by iOS
-				this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-					() => console.log('Request successful'),
-					error => console.log('Error requesting location permissions', error)
-				);
-			}
-		});
-		this.ble.enable(); // ---> request BLE service.
+		this.coreservice();
 		this.backgroundMode.enable(); // ---> enable background mode.
 		
 		// Set action of notifications.
@@ -143,6 +134,68 @@ export class MyApp {
 		this.statusBar.styleDefault();
 			this.splashScreen.hide();
 		});
+	}
+	 
+	coreservice() {
+		this.ble.isEnabled().then(() => {
+				this.locationAccuracy.canRequest().then((canRequest: boolean) => { // ---> request GPS service.
+					if(canRequest) {
+						// the accuracy option will be ignored by iOS
+						this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+							() => console.log('Request successful'),
+							error => console.log('Error requesting location permissions', error)
+						);
+					}
+				});
+			}, 
+			() => {
+				this.ble.enable().then(() => { // ---> request BLE service.
+						this.ble.isEnabled().then(() => {
+								this.locationAccuracy.canRequest().then((canRequest: boolean) => { // ---> request GPS service.
+									if(canRequest) {
+										// the accuracy option will be ignored by iOS
+										this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+											() => console.log('Request successful'),
+											error => console.log('Error requesting location permissions', error)
+										);
+									}
+								});
+							},
+							() => {
+								let alert = this.alertCtrl.create({
+									title: "ระบบ",
+									message: "โปรดเปิดใช้งานบูลธูทเพื่อประสบการณ์การใช้ห้องสมุด ICT ที่ดียิ่งขึ้น",
+									buttons: [
+										{
+											text: "รับทราบ",
+											handler: () => {
+												this.coreservice();
+											}
+										},
+									]
+								});
+								alert.present();
+							}
+						);
+					},
+					() => {
+						let alert = this.alertCtrl.create({
+							title: "ระบบ",
+							message: "โปรดเปิดใช้งานบูลธูทเพื่อประสบการณ์การใช้ห้องสมุด ICT ที่ดียิ่งขึ้น",
+							buttons: [
+								{
+									text: "รับทราบ",
+									handler: () => {
+										this.coreservice();
+									}
+								},
+							]
+						});
+						alert.present();
+					}
+				); 
+			}
+		);
 	}
 	 
 	checkInBGMode(){

@@ -16,6 +16,7 @@ export class SearchPage {
 	private match: Array<{word: string, firstnon: string, lastnon: string, fullword: string}>;
 	private typesearch: {title: string};
 	private ordersearch: {title: string};
+	private suggestloading: boolean;
 	
   	constructor(public navCtrl: NavController, private events: Events, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
 		this.events.publish("deactivate");
@@ -23,65 +24,22 @@ export class SearchPage {
 		this.word = "";
 		this.type = "name";
 		this.order = "DESC";
+		this.suggestloading = false;
 		
 		this.typesearch = {title: "ค้นหา"};
 		this.ordersearch = {title: "ค้นหา"};
-		
-		setTimeout(() => {
-			if (!this.indexer){
-				let lerty = this.alertCtrl.create({
-					title: "ติดต่อเซิฟเวอร์ไม่ได้",
-					message: "โปรดทราบว่าการค้นหาจะไม่ทำงาน",
-					buttons:[
-						{
-							text: "รับทราบ",
-							handler: () => {
-							}
-						}
-					],
-				});
-				lerty.present();
-			}
-		}, 5000);
-		
-		let xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://ictlibrarybeacon.xyz/api/book/get/", true);
-		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		
-		let results = (() => {
-			if (xhr.status === 200 && xhr.readyState === 4){
-				let v = JSON.parse(xhr.responseText);
-				
-				for(let i = 0; i < v.rows; i++){
-					if (!this.indexer){
-						this.indexer = [{
-							title: v[i].book_name,
-						}];
-					}else{
-						this.indexer.push({
-							title: v[i].book_name,
-						});
-					}
-				}
-				
-				console.log(JSON.stringify(this.indexer));
-			}
-		});
-		
-		xhr.onreadystatechange = results;
-		xhr.send("action=indexer");
   	}
 
-	searchsuggestor() {
-		if (typeof this.indexer !== "undefined"){
-			let x: number = this.indexer.length;
+	loadsuggestor(indexer: Array<{title: string}>){
+		if (typeof indexer !== "undefined"){
+			let x: number = indexer.length;
 			if (typeof this.match !== "undefined"){
 				this.match.length = 0;
 			}
 			
 			if (this.word.length > 0){
 				for(let i = 0; i < x; i++){
-					let word: string = this.indexer[i].title;
+					let word: string = indexer[i].title;
 					let exp = new RegExp(this.word);
 					
 					console.log("exp : ", exp);
@@ -115,8 +73,65 @@ export class SearchPage {
 					}
 				}
 				
+				this.suggestloading = false;
 				console.log("this.match : "+JSON.stringify(this.match));
+			}else{
+				this.suggestloading = false;
 			}
+		}else{
+			this.suggestloading = false;
+		}
+	}
+
+	searchsuggestor() {
+		if (typeof this.match !== "undefined"){
+			this.match.length = 0;
+		}
+		if (typeof this.indexer !== "undefined"){
+			this.indexer.length = 0;
+		}
+		
+		if (this.word.length > 0){
+			this.suggestloading = true;
+			
+			setTimeout(() => {
+				if (!this.indexer){
+					this.suggestloading = false;
+				}else if (this.indexer.length < 1){
+					this.suggestloading = false;
+				}
+			}, 7000);
+			
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", "http://ictlibrarybeacon.xyz/api/book/get/", true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			
+			let results = (() => {
+				if (xhr.status === 200 && xhr.readyState === 4){
+					let v = JSON.parse(xhr.responseText);
+
+					for(let i = 0; i < v.rows; i++){
+						if (!this.indexer){
+							this.indexer = [{
+								title: v[i].book_name,
+							}];
+						}else{
+							this.indexer.push({
+								title: v[i].book_name,
+							});
+						}
+					}
+
+					console.log(JSON.stringify(this.indexer));
+
+					this.loadsuggestor(this.indexer);
+				}
+			});
+
+			xhr.onreadystatechange = results;
+			xhr.send("action=indexer&word="+this.word);
+		}else{
+			this.suggestloading = false;
 		}
 	}
 
