@@ -5,16 +5,19 @@ import { BeaconrangPage } from "../beaconrang/beaconrang";
 
 import { BLE } from '@ionic-native/ble';
 
+import { BeaconsDBProvider } from '../../provider/beacons/beacons';
+
 @Component({
   selector: 'page-beaconadd',
   templateUrl: 'beaconadd.html'
 })
-export class BeaconaddPage {
+export class BeaconaddPage extends BeaconsDBProvider {
 	
 	private scanres: Array<{index: number, id: string, uuid?: string, major?: number, minor?: number, lastfour?: string}>;
 	private active: boolean;
 	
   	constructor(public navCtrl: NavController, private events: Events, private ble: BLE, public alertCtrl: AlertController, public loadingCtrl: LoadingController){
+		super();
 		this.events.publish("deactivate");
 		this.active = true;
 		this.scanble();
@@ -22,6 +25,21 @@ export class BeaconaddPage {
 
 	ionViewWillLeave(){
 		this.active = false;
+	}
+
+	checkbeaconsdb(beacon){
+		let obj: any = this.beacons;
+		let x: number = this.beacons.length;
+		
+		for(let i = 0; i < x; i++){
+			if (beacon.id === obj[i].identifier){
+				console.log("found matched id "+beacon.id+" in beacons in-app database");
+				return true;
+			}
+		}
+		
+		console.log("beacon id "+beacon.id+" is not match with in-app database");
+		return false;
 	}
 
 	chosenIt(index){
@@ -155,40 +173,46 @@ export class BeaconaddPage {
 			let lastfour: string = this.getlastfour(id);
 
 			if (typeof this.scanres === 'undefined'){ // If for calling method in first time.
-				this.scanres = [{
-					index: 0,
-					id: id,
-					uuid: uuid,
-					major: major,
-					minor: minor,
-					lastfour: lastfour,
-				}];
-				console.log("Gaining first beacon "+JSON.stringify(result));
+				if (this.checkbeaconsdb(result)){
+					this.scanres = [{
+						index: 0,
+						id: id,
+						uuid: uuid,
+						major: major,
+						minor: minor,
+						lastfour: lastfour,
+					}];
+					console.log("Gaining first beacon "+JSON.stringify(result));
+				}
 			}else if (this.scanres.length === 0){ // If for calling method first time in repeatly.
-				this.scanres = [{
-					index: 0,
-					id: id,
-					uuid: uuid,
-					major: major,
-					minor: minor,
-					lastfour: lastfour,
-				}];
-				console.log("Gaining first beacon with length = 0 "+JSON.stringify(result));
+				if (this.checkbeaconsdb(result)){
+					this.scanres = [{
+						index: 0,
+						id: id,
+						uuid: uuid,
+						major: major,
+						minor: minor,
+						lastfour: lastfour,
+					}];
+					console.log("Gaining first beacon with length = 0 "+JSON.stringify(result));
+				}
 			}else{ // ---> Check in case of duplicate collected beacon
 				for(let i = 0, x = this.scanres.length; i < x; i++){
 					if (result.id === this.scanres[i].id){
 						break;
 					}
 					if (i === x-1){
-						this.scanres.push({
-							index: this.scanres.length,
-							id: id,
-							uuid: uuid,
-							major: major,
-							minor: minor,
-							lastfour: lastfour,
-						});
-						console.log("Gaining another beacon "+JSON.stringify(result));
+						if (this.checkbeaconsdb(result)){
+							this.scanres.push({
+								index: this.scanres.length,
+								id: id,
+								uuid: uuid,
+								major: major,
+								minor: minor,
+								lastfour: lastfour,
+							});
+							console.log("Gaining another beacon "+JSON.stringify(result));
+						}
 					}
 				}
 			}

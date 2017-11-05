@@ -33,6 +33,8 @@ import { Toast } from '@ionic-native/toast';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { IBeacon } from '@ionic-native/ibeacon';
 
+import { BeaconsDBProvider } from '../provider/beacons/beacons';
+
 @NgModule({
   	declarations: [
     	MyApp,
@@ -94,6 +96,7 @@ import { IBeacon } from '@ionic-native/ibeacon';
 		LocalNotifications,
 		LocationAccuracy,
 		IBeacon,
+		BeaconsDBProvider,
     	{provide: ErrorHandler, useClass: IonicErrorHandler}
   	]
 })

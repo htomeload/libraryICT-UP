@@ -22,10 +22,12 @@ import { BLE } from '@ionic-native/ble';
 import { IBeacon } from '@ionic-native/ibeacon';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
+import { BeaconsDBProvider } from '../provider/beacons/beacons';
+
 @Component({
   	templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyApp extends BeaconsDBProvider {
 	@ViewChild(Nav) nav: Nav;
 
 	public rootPage: any = WelcomePage;
@@ -42,6 +44,7 @@ export class MyApp {
 	constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private alertCtrl: AlertController, 
 				private locationAccuracy: LocationAccuracy, private ble: BLE, public events: Events, private backgroundMode: BackgroundMode, 
 			   	private localNotifications: LocalNotifications, private toast: Toast, private ibeacon: IBeacon) {
+		super();
 		
 		// initial some property.
 		this.rc = 0;
@@ -234,6 +237,21 @@ export class MyApp {
 		alert.present();
 	}
 	 
+	checkbeaconsdb(beacon){
+		let obj: any = this.beacons;
+		let x: number = this.beacons.length;
+		
+		for(let i = 0; i < x; i++){
+			if (beacon.id === obj[i].identifier){
+				console.log("found matched id "+beacon.id+" in beacons in-app database");
+				return true;
+			}
+		}
+		
+		console.log("beacon id "+beacon.id+" is not match with in-app database");
+		return false;
+	}
+	 
 	buffertouuid(buffer){
 		// convert advertise of beacon to Uint8Array then convert to string and strip part of string which refered to UUID.
 		let raw: string = Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
@@ -287,36 +305,42 @@ export class MyApp {
 				let minor: number = result.advertising? this.getminor(new Uint8Array(result.advertising)):0;
 
 				if (typeof this.scanres === 'undefined'){ // If for calling method in first time.
-					this.scanres = [{
-						id: id,
-						uuid: uuid,
-						major: major,
-						minor: minor,
-					}];
-					console.log("Gaining first beacon "+JSON.stringify(result));
-				}else if (this.scanres.length === 0){ // If for calling method first time in repeatly.
-					this.scanres = [{
-						id: id,
-						uuid: uuid,
-						major: major,
-						minor: minor,
-					}];
-					console.log("Gaining first beacon with length = 0 "+JSON.stringify(result));
-				}else{ // ---> Check in case of duplicate collected beacon
-					for(let i = 0, x = this.scanres.length; i < x; i++){
-						if (result.id === this.scanres[i].id){
-							break;
-						}
-						if (i === x-1){
-							this.scanres.push({
-								id: id,
-								uuid: uuid,
-								major: major,
-								minor: minor,
-							});
-						}
+					if (this.checkbeaconsdb(result)){
+						this.scanres = [{
+							id: id,
+							uuid: uuid,
+							major: major,
+							minor: minor,
+						}];
+						console.log("Gaining first beacon "+JSON.stringify(result));
 					}
-					console.log("Gaining another beacon "+JSON.stringify(result));
+				}else if (this.scanres.length === 0){ // If for calling method first time in repeatly.
+					if (this.checkbeaconsdb(result)){
+						this.scanres = [{
+							id: id,
+							uuid: uuid,
+							major: major,
+							minor: minor,
+						}];
+						console.log("Gaining first beacon with length = 0 "+JSON.stringify(result));
+					}
+				}else{ // ---> Check in case of duplicate collected beacon
+					if (this.checkbeaconsdb(result)){
+						for(let i = 0, x = this.scanres.length; i < x; i++){
+							if (result.id === this.scanres[i].id){
+								break;
+							}
+							if (i === x-1){
+								this.scanres.push({
+									id: id,
+									uuid: uuid,
+									major: major,
+									minor: minor,
+								});
+							}
+						}
+						console.log("Gaining another beacon "+JSON.stringify(result));
+					}
 				}
 			});
 			setTimeout(() => { // ---> Prepare for ragging
