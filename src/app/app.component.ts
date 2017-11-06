@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, AlertController, Events } from 'ionic-angular';
+import { Nav, Platform, AlertController, Events, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -43,7 +43,7 @@ export class MyApp extends BeaconsDBProvider {
 
 	constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private alertCtrl: AlertController, 
 				private locationAccuracy: LocationAccuracy, private ble: BLE, public events: Events, private backgroundMode: BackgroundMode, 
-			   	private localNotifications: LocalNotifications, private toast: Toast, private ibeacon: IBeacon) {
+			   	private localNotifications: LocalNotifications, private toast: Toast, private ibeacon: IBeacon, public loadingCtrl: LoadingController) {
 		super();
 		
 		// initial some property.
@@ -141,47 +141,63 @@ export class MyApp extends BeaconsDBProvider {
 	 
 	coreservice() {
 		this.ble.isEnabled().then(() => {
+				console.log("ble is already enabled");
+				console.log("check gps service");
+				let loading = this.loadingCtrl.create({
+					spinner: 'dots',
+					content: 'กำลังสร้างคำขอตำแหน่งพิกัด'
+				});
+				loading.present();
 				this.locationAccuracy.canRequest().then((canRequest: boolean) => { // ---> request GPS service.
 					if(canRequest) {
+						console.log("gps can be requested");
+						console.log("ask user to take action on enabling gps service");
+						loading.dismiss();
 						// the accuracy option will be ignored by iOS
 						this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-							() => console.log('Request successful'),
+							() => console.log('gps request successful'),
 							error => console.log('Error requesting location permissions', error)
 						);
 					}
 				});
 			}, 
 			() => {
+				console.log("ble is not enabled");
+				console.log("ask user to take action on enabling ble service");
 				this.ble.enable().then(() => { // ---> request BLE service.
-						this.ble.isEnabled().then(() => {
-								this.locationAccuracy.canRequest().then((canRequest: boolean) => { // ---> request GPS service.
-									if(canRequest) {
-										// the accuracy option will be ignored by iOS
-										this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-											() => console.log('Request successful'),
-											error => console.log('Error requesting location permissions', error)
-										);
-									}
-								});
-							},
-							() => {
-								let alert = this.alertCtrl.create({
-									title: "ระบบ",
-									message: "โปรดเปิดใช้งานบูลธูทเพื่อประสบการณ์การใช้ห้องสมุด ICT ที่ดียิ่งขึ้น",
-									buttons: [
-										{
-											text: "รับทราบ",
-											handler: () => {
-												this.coreservice();
-											}
-										},
-									]
-								});
-								alert.present();
-							}
-						);
-					},
+					console.log("ble service being enabled");
+					console.log("check ble enabling service status");
+					this.ble.isEnabled().then(() => {
+							console.log("ble be enabled by user");
+							console.log("check gps service");
+							let loading = this.loadingCtrl.create({
+								spinner: 'dots',
+								content: 'กำลังสร้างคำขอตำแหน่งพิกัด'
+							});
+							loading.present();
+							this.locationAccuracy.canRequest().then((canRequest: boolean) => { // ---> request GPS service.
+								if(canRequest) {
+									console.log("gps can be requested");
+									console.log("ask user to take action on enabling gps service");
+									loading.dismiss();
+									// the accuracy option will be ignored by iOS
+									this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+										() => console.log('Request successful'),
+										error => console.log('Error requesting location permissions', error)
+									);
+								}
+							});
+						}, 
+						() => {
+							console.log("something went wrong in enabling ble service");
+							console.log("ask for enabling ble service again");
+							this.coreservice();
+						}
+					);
+				},
 					() => {
+						console.log("user reject to enabling ble service");
+						console.log("ask for enabling ble service again");
 						let alert = this.alertCtrl.create({
 							title: "ระบบ",
 							message: "โปรดเปิดใช้งานบูลธูทเพื่อประสบการณ์การใช้ห้องสมุด ICT ที่ดียิ่งขึ้น",
