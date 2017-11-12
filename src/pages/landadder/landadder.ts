@@ -9,7 +9,7 @@ import { WelcomePage } from "../welcome/welcome";
 })
 export class LandadderPage {
 	
-	private v: {id: string, meter: number, baseloc: string, loc: string, choicer: string, staffid?: number, lastfour?: string};
+	private v: {id: string, meter: number, placex: number, placey: number, staffid?: number, lastfour?: string};
 	private beacon: {identifier: string, uuid?: string, major?: number, minor?: number, lastfour?: string};
 	
   	constructor(public navCtrl: NavController, private events: Events, public alertCtrl: AlertController, private navParams: NavParams, 
@@ -20,12 +20,11 @@ export class LandadderPage {
 		
 		let id = this.beacon.identifier;
 		let meter = this.navParams.get("meter");
-		let baseloc = this.navParams.get("baseloc");
-		let loc = this.navParams.get("loc");
-		let choicer = this.navParams.get("choicer");
+		let placex = this.navParams.get("placex");
+		let placey = this.navParams.get("placey");
 		let lastfour = this.beacon.lastfour;
 		
-		this.v = {id: id, meter: meter, baseloc: baseloc, loc: loc, choicer: choicer, staffid: parseInt(localStorage.getItem("staffid")), lastfour: lastfour};
+		this.v = {id: id, meter: meter, placex: placex, placey: placey, staffid: parseInt(localStorage.getItem("staffid")), lastfour: lastfour};
   	}
 	
 	ionViewWillLeave(){
@@ -79,7 +78,7 @@ export class LandadderPage {
 			}
 		}, 5000);
 		
-		let str: string = "uuid="+this.beacon.uuid+"&major="+this.beacon.major+"&minor="+this.beacon.minor+"&id="+this.beacon.identifier+"&meter="+this.v.meter+"&baseloc="+this.v.baseloc+"&loc="+this.v.loc+"&staffid="+this.v.staffid+"&choicer="+this.v.choicer;
+		let str: string = "uuid="+this.beacon.uuid+"&major="+this.beacon.major+"&minor="+this.beacon.minor+"&id="+this.beacon.identifier+"&meter="+this.v.meter+"&place_x="+this.v.placex+"&place_y="+this.v.placey+"&staffid="+this.v.staffid;
 		console.log("send request to server with param: "+str);
 		//loading.dismiss();
 		let xhr = new XMLHttpRequest();

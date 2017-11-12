@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Events, AlertController, NavParams } from 'ionic-angular';
 
-import { BaselocaddPage } from "../baselocadd/baselocadd";
+import { MapaddPage } from "../mapadd/mapadd";
 
 import { IBeacon } from '@ionic-native/ibeacon';
 
@@ -47,7 +47,7 @@ export class BeaconrangPage {
 				{
 					text: "ตกลง",
 					handler: () => {
-						this.navCtrl.push(BaselocaddPage, {beacon: this.beacon, meter: this.meter});
+						this.navCtrl.push(MapaddPage, {beacon: this.beacon, meter: this.meter});
 					}
 				},
 				{

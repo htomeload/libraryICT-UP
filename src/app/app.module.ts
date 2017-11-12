@@ -22,8 +22,7 @@ import { SoftwarePage } from '../pages/software/software';
 import { AdminloginPage } from '../pages/adminlogin/adminlogin';
 import { BeaconaddPage } from '../pages/beaconadd/beaconadd';
 import { BeaconrangPage } from '../pages/beaconrang/beaconrang';
-import { BaselocaddPage } from '../pages/baselocadd/baselocadd';
-import { LocaddPage } from "../pages/locadd/locadd";
+import { MapaddPage } from '../pages/mapadd/mapadd';
 import { LandadderPage } from "../pages/landadder/landadder";
 
 import { BLE } from '@ionic-native/ble';
@@ -55,8 +54,7 @@ import { BeaconsDBProvider } from '../provider/beacons/beacons';
 		AdminloginPage,
 		BeaconaddPage,
 		BeaconrangPage,
-		BaselocaddPage,
-		LocaddPage,
+		MapaddPage,
 		LandadderPage,
   	],
   	imports: [
@@ -83,8 +81,7 @@ import { BeaconsDBProvider } from '../provider/beacons/beacons';
 		AdminloginPage,
 		BeaconaddPage,
 		BeaconrangPage,
-		BaselocaddPage,
-		LocaddPage,
+		MapaddPage,
 		LandadderPage,
   	],
   	providers: [
