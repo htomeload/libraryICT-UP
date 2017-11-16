@@ -33,13 +33,13 @@
 	<ion-item *ngIf="forbid && !loading">
 		<ion-label>เลือกคอลัมภ์</ion-label>
 		<ion-select [(ngModel)]="cx" (ngModelChange)="changepos()">
-			<ion-option [value]="x.x" *ngFor="let x of posx">{{x.x}}</ion-option>
+			<ion-option [value]="x.x" *ngFor="let x of posx">{{letter[x.x]}}</ion-option>
 		</ion-select>
 	</ion-item>
 	<ion-item *ngIf="forbid && !loading">
 		<ion-label>เลือกแถว</ion-label>
 		<ion-select [(ngModel)]="cy" (ngModelChange)="changepos()">
-			<ion-option [value]="y.y" *ngFor="let y of posy">{{y.y}}</ion-option>
+			<ion-option [value]="y.y" *ngFor="let y of posy">{{y.y+1}}</ion-option>
 		</ion-select>
 	</ion-item>
 	<br />
@@ -53,7 +53,7 @@
 			</tbody>
 		</table>
 	</div>
-	<div *ngIf="forbid && !loading" style="width: 100%; padding: 1rem; margin-top: 2rem;">
+	<div *ngIf="forbid && !loading && formpass" style="width: 100%; padding: 1rem; margin-top: 2rem;">
 		<button ion-button block (click)="chosenIt()">บันทึกสถานที่</button>
 	</div>
 </ion-content>

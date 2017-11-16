@@ -18,7 +18,7 @@
 	<p style="width: 100%; padding: 1rem;">Beacon ของพื้นที่&nbsp;&nbsp;:&nbsp;&nbsp;{{v.lastfour}}</p>
 	<p style="width: 100%; padding: 1rem;">MAC Addess ของ Baconn&nbsp;&nbsp;:&nbsp;&nbsp;{{v.id}}</p>
 	<p style="width: 100%; padding: 1rem;">รัศมีจากศูนย์กลาง&nbsp;&nbsp;:&nbsp;&nbsp;{{v.meter}}&nbsp;&nbsp;เมตร</p>
-	<p style="width: 100%; padding: 1rem;">ตำแหน่งวาง&nbsp;&nbsp;:&nbsp;&nbsp;{{v.placex}}&nbsp;,&nbsp;{{v.placey}}</p>
+	<p style="width: 100%; padding: 1rem;">ตำแหน่งวาง&nbsp;&nbsp;:&nbsp;&nbsp;{{letter[v.placex]}}{{v.placey+1}}</p>
 	<div style="width: 100%; padding: 1rem; margin-top: 2rem;">
 		<button ion-button block (click)="chosenIt()">บันทึกข้อมูล</button>
 	</div>

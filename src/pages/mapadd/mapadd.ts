@@ -13,9 +13,11 @@ export class MapaddPage {
 	private forbid: Array<{index: number, name: string, place: string}>;
 	public posx: Array<{x: number}>;
 	public posy: Array<{y: number}>;
+	public letter: any;
 	private cx: number;
 	private cy: number;
 	private loading: boolean;
+	private formpass: boolean;
 	
   	constructor(public navCtrl: NavController, private events: Events, public alertCtrl: AlertController, private navParams: NavParams){
 		this.events.publish("deactivate");
@@ -27,6 +29,8 @@ export class MapaddPage {
 		this.cx = 0;
 		this.cy = 0;
 		this.loading = true;
+		this.letter = ["A", "B", "C", "D", "E", "F", "G"];
+		this.formpass = false;
 		
 		for(let i = 0; i < 7; i++){
 			if (i === 0){
@@ -59,7 +63,7 @@ export class MapaddPage {
 	chosenIt(){
 		const alert = this.alertCtrl.create({
 			title: "ยืนยันเป็นตำแหน่งนี้ ?",
-			message: "คอลัมภ์&nbsp;&nbsp;:&nbsp;&nbsp;"+this.cx+"<br /><br />แถว&nbsp;&nbsp;:&nbsp;&nbsp;"+this.cy,
+			message: "คอลัมภ์&nbsp;&nbsp;:&nbsp;&nbsp;"+this.letter[this.cx]+"<br /><br />แถว&nbsp;&nbsp;:&nbsp;&nbsp;"+this.cy,
 			buttons: [
 				{
 					text: "ตกลง",
@@ -161,6 +165,7 @@ export class MapaddPage {
 							let set: any = document.getElementById(this.cy+","+this.cx);
 							
 							set.style.backgroundColor = "red";
+							this.formpass = true;
 						}
 					}
 				}else{

@@ -11,12 +11,15 @@ export class LandadderPage {
 	
 	private v: {id: string, meter: number, placex: number, placey: number, staffid?: number, lastfour?: string};
 	private beacon: {identifier: string, uuid?: string, major?: number, minor?: number, lastfour?: string};
+	public letter: any;
 	
   	constructor(public navCtrl: NavController, private events: Events, public alertCtrl: AlertController, private navParams: NavParams, 
 			    public loadingCtrl: LoadingController){
 		this.events.publish("deactivate");
 		
 		this.beacon = this.navParams.get("beacon");
+		
+		this.letter = ["A", "B", "C", "D", "E", "F", "G"];
 		
 		let id = this.beacon.identifier;
 		let meter = this.navParams.get("meter");
