@@ -159,6 +159,7 @@ export class MapaddPage {
 								]
 							});
 							alert.present();
+							this.formpass = false;
 							break;
 						}
 						if (k === x-1){

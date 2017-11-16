@@ -158,6 +158,9 @@ export class MyApp extends BeaconsDBProvider {
 							() => console.log('gps request successful'),
 							error => console.log('Error requesting location permissions', error)
 						);
+					}else{
+						console.log("gps can't be requested");
+						loading.dismiss();
 					}
 				});
 			}, 
@@ -185,6 +188,9 @@ export class MyApp extends BeaconsDBProvider {
 										() => console.log('Request successful'),
 										error => console.log('Error requesting location permissions', error)
 									);
+								}else{
+									console.log("gps can't be requested");
+									loading.dismiss();
 								}
 							});
 						}, 
