@@ -83,6 +83,7 @@
     <plugin name="cordova-plugin-ble-central" spec="^1.1.4" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^1.7.2" />
     <plugin name="cordova-plugin-mauron85-background-geolocation" spec="^2.2.5">
         <variable name="ACCOUNT_TYPE" value="$PACKAGE_NAME.account" />
         <variable name="CONTENT_AUTHORITY" value="$PACKAGE_NAME" />
@@ -94,4 +95,5 @@
     <plugin name="cordova-plugin-x-toast" spec="^2.6.0" />
     <plugin name="de.appplant.cordova.plugin.local-notification" spec="git+https://github.com/katzer/cordova-plugin-local-notifications.git" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <allow-navigation href="http://10.95.202.0:8100" />
 </widget>

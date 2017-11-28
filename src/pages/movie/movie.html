@@ -48,24 +48,28 @@
 		</ion-refresher-content>
 	</ion-refresher>
 	<h5 *ngIf="error">{{error}}</h5>
-	<div style="height: 30%; width: 80%; margin-top: 7%; margin-bottom: 20%;" class="align-center">
-		<img [src]="featured"/>
-		<h5 style="width: 100%; text-align: center; margin-top: 7%;">{{title}}</h5>
+	<div *ngIf="featured" style="position: relative; height: 30%; width: 80%; margin-top: 7%; margin-bottom: 20%;" class="align-center">
+		<img [src]="featured.img" class="movie-img-featured" (click)="playthis(featured.url)" />
+		<h5 class="movie-featured-title">{{featured.title}}</h5>
 	</div>
-	<ion-grid>
-		<ion-row *ngFor="let movie of data" style="height: 30%;">
-			<ion-col *ngIf="movie.index%2 != 0" class="align-center" style="width: 50%;">
-				<img [src]="movie.img" class="full-both align-center" />
-			</ion-col>
-			<ion-col *ngIf="movie.index%2 != 0" class="align-center" style="width: 50%;">
+	<div *ngFor="let movie of data" style="width: 100%; height: 40%; position: relative;">
+		<div *ngIf="movie.index%2 != 0" class="movie-row">
+			<div class="align-center movie-block">
+				<img [src]="movie.img" (click)="playthis(movie.url)" class="movie-img" />
+			</div>
+			<div class="movie-border"></div>
+			<div class="align-center movie-block" style="vertical-align: middle;">
 				<h5 style="width: 100%; text-align: center;">{{movie.starttime}}</h5>
-			</ion-col>
-			<ion-col *ngIf="movie.index%2 == 0" class="align-center" style="width: 50%;">
+			</div>
+		</div>
+		<div *ngIf="movie.index%2 == 0" class="movie-row">
+			<div class="align-center movie-block" style="vertical-align: middle;">
 				<h5 style="width: 100%; text-align: center;">{{movie.starttime}}</h5>
-			</ion-col>
-			<ion-col *ngIf="movie.index%2 == 0" class="align-center" style="width: 50%;">
-				<img [src]="movie.img" class="full-both align-center" />
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+			</div>
+			<div class="movie-border"></div>
+			<div class="align-center movie-block">
+				<img [src]="movie.img" (click)="playthis(movie.url)" class="movie-img" />
+			</div>
+		</div>
+	</div>
 </ion-content>

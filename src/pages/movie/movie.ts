@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, Events } from 'ionic-angular';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 import { TechnologyPage } from '../technology/technology';
 import { ExhibitionPage } from '../exhibition/exhibition';
 
@@ -10,28 +12,15 @@ import { ExhibitionPage } from '../exhibition/exhibition';
 })
 export class MoviePage {
 	
-	private featured: string;
-	private title: string;
-	private data: Array<{index?: number, img: string, starttime: string}>;
+	private featured: {title: string, img: string, url: string};
+	private data: Array<{index: number, img: string, starttime: string, url: string}>;
 	private error: string; 
-	
-  	constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private events: Events) {
-		//this.loadContent();
-		this.featured = "assets/m/f.jpg";
-		this.title = "The Social Network";
-		this.data = [
-			{
-				index: 1,
-				img: "assets/m/a.jpg",
-				starttime: "12.00 น."
-			},
-			{
-				index: 2,
-				img: "assets/m/b.jpg",
-				starttime: "13.30 น."
-			}
-		];
+	private browserOptions: string;
+
+  	constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private events: Events, private iab: InAppBrowser) {
+		this.loadContent();
 		this.events.publish("deactivate");
+		this.browserOptions = "location=no,hardwareback=no";
   	}
 
 	goPage(page){
@@ -49,8 +38,12 @@ export class MoviePage {
 	
 	reload(event){
 		if (event.progress > 1 && event.state === "refreshing"){
+			if (typeof this.data !== "undefined"){
+				this.data.length = 0;
+			}
+			
 			this.error = "";
-			//this.loadContent();
+			this.loadContent();
 			setTimeout(() => {
 				event.complete();
 			}, 1000);
@@ -60,6 +53,8 @@ export class MoviePage {
 	}
 
 	loadContent(){
+		let sdata: any;
+		
 		let loading = this.loadingCtrl.create({
 			spinner: 'dots',
 			content: 'Loading Please Wait...'
@@ -67,30 +62,65 @@ export class MoviePage {
 		
 		loading.present();
 		
-		/*let xml = new XMLHttpRequest();
-		xml.open("POST", "http://ictlibrarybeacon.xyz/api/book/get/", true);
+		setTimeout(() => {
+			if (!sdata){
+				this.error = "ไม่สามารถติดต่อกับเซิฟเวอร์ได้ กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตแล้วดึงหน้านี้ลงเพื่อลองใหม่";
+				loading.dismiss();
+			}
+		}, 5000);
+		
+		let xml = new XMLHttpRequest();
+		xml.open("POST", "http://ictlibrarybeacon.xyz/api/movie/get/", true);
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xml.onreadystatechange = (() => {
-			if (xml.readyState == 4 && xml.status == 200){
-				let sdata = JSON.parse(xml.responseText);
+			if (xml.readyState === 4 && xml.status === 200){
+				sdata = JSON.parse(xml.responseText);
 				
-				for(let i = 1; i < sdata.rows; i++){
-					if (i > 0){
-						this.data.push({
-							"img": sdata[i].pic_book,
-						});
+				let date = new Date();
+				let h = date.getHours();
+				let m = date.getMinutes();
+				let hm = h.toString()+m.toString();
+				
+				for(let i = 0; i < sdata.rows; i++){
+					if (!this.data){
+						this.data = [{
+							index: i,
+							img: "http://ictlibrarybeacon.xyz/images/covermovie/"+sdata[i].movie_cover,
+							starttime: sdata[i].movie_start,
+							url: sdata[i].movie_trialler,
+						}];
 					}else{
-						this.featured = sdata[i].pic_book;
+						this.data.push({
+							index: this.data.length,
+							img: "http://ictlibrarybeacon.xyz/images/covermovie/"+sdata[i].movie_cover,
+							starttime: sdata[i].movie_start,
+							url: sdata[i].movie_trialler,
+						});
+					}
+					
+					if (!this.featured){
+						let splits = sdata[i].movie_start.split(":");
+						let hs = parseInt(splits[0]).toString()+"."+parseInt(splits[1]).toString();
+
+						if (hm < hs){
+							this.featured = {
+								title: sdata[i].movie_name,
+								img: "http://ictlibrarybeacon.xyz/images/covermovie/"+sdata[i].movie_cover,
+								url: sdata[i].movie_trialler,
+							};
+						}
 					}
 				}
 				
 				loading.dismiss();
-			}/*else{
-				this.error += "xml.readyState : "+JSON.stringify(xml.readyState)+" &&&& ";
-				this.error += "xml.status : "+JSON.stringify(xml.status)+" ========== ";
 			}
 		});
-		xml.send("action=test");*/
+		xml.send();
+	}
+
+	playthis(url){
+		let broswer = this.iab.create(url, '_self', this.browserOptions);
+		broswer.show();
 	}
 
 }

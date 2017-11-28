@@ -1,3 +1,43 @@
 page-movie {
-
+    .movie-img-featured {
+        position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+		height: 100%;
+    }
+    .movie-featured-title{
+        position: absolute;
+        width: 100%; 
+        height: 100%; 
+        text-align: center;
+        top: 110%;
+    }
+    .movie-img {
+        position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+        height: 100%;
+        width: 100%;
+    }
+    .movie-row {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        padding: 2rem;
+    }
+    .movie-border {
+        display: inline-block;
+        width: 2px;
+        height: 140%;
+        background-color: black;
+    }
+    .movie-block {
+        position: relative;
+        display: inline-block;
+        width: 48%;
+        height: 100%;
+    }
 }

@@ -77,7 +77,7 @@ export class BookPage {
 		xml.onreadystatechange = (() => {
 			if (xml.readyState == 4 && xml.status == 200){
 				this.clear();
-				
+				console.log(xml.responseText);
 				sdata = JSON.parse(xml.responseText);
 				
 				for(let i = 0; i < sdata.rows; i++){
@@ -108,10 +108,7 @@ export class BookPage {
 				}
 				
 				loading.dismiss();
-			}/*else{
-				this.error += "xml.readyState : "+JSON.stringify(xml.readyState)+" &&&& ";
-				this.error += "xml.status : "+JSON.stringify(xml.status)+" ========== ";
-			}*/
+			}
 		});
 		xml.send("action=latest");
 	}

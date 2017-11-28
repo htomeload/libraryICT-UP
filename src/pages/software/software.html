@@ -51,7 +51,7 @@
 	<div class="software-row" *ngFor="let rows of data">
 		<h5>{{rows.name}}</h5>
 		<div style="width: 100%; height: 100%;">
-			<ion-slides autoplay="3000" loop="true" pager="true" slidesPerView="3" spaceBetween="4">
+			<ion-slides autoplay="3000" loop="true" pager="true" slidesPerView="3" spaceBetween="4" control="1">
 				<ion-slide *ngFor="let software of rows.content" (click)="openLink(software.link)">
 					<div style="position: relative; height: 80%; width: 100%; border: 2px solid black;">
 						<img [src]="software.img" style="position: relative; width: auto; height: 80%;" />

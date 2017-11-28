@@ -28,6 +28,7 @@
         "@ionic-native/geofence": "^4.3.0",
         "@ionic-native/geolocation": "^4.3.0",
         "@ionic-native/ibeacon": "^4.3.2",
+        "@ionic-native/in-app-browser": "^4.4.2",
         "@ionic-native/local-notifications": "^4.2.1",
         "@ionic-native/location-accuracy": "^4.2.1",
         "@ionic-native/push": "^4.1.0",
@@ -44,6 +45,7 @@
         "cordova-plugin-console": "^1.0.5",
         "cordova-plugin-device": "^1.1.4",
         "cordova-plugin-ibeacon": "^3.5.2",
+        "cordova-plugin-inappbrowser": "^1.7.2",
         "cordova-plugin-local-notifications": "git+https://github.com/katzer/cordova-plugin-local-notifications.git",
         "cordova-plugin-mauron85-background-geolocation": "^2.2.5",
         "cordova-plugin-request-location-accuracy": "^2.2.2",
@@ -61,7 +63,7 @@
     },
     "devDependencies": {
         "@ionic/app-scripts": "2.1.3",
-        "ionic": "3.18.0",
+        "ionic": "3.19.0",
         "typescript": "2.3.4"
     },
     "description": "An Ionic project",
@@ -82,7 +84,8 @@
                 "CONTENT_AUTHORITY": "$PACKAGE_NAME"
             },
             "cordova-plugin-request-location-accuracy": {},
-            "com.unarin.cordova.beacon": {}
+            "com.unarin.cordova.beacon": {},
+            "cordova-plugin-inappbrowser": {}
         },
         "platforms": [
             "android"

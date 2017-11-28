@@ -10,12 +10,12 @@ import { ExhibitionPage } from '../exhibition/exhibition';
 })
 export class SoftwarePage {
 	
-	private data: Array<{index: number, name: string, content: Array<{sname: string, img: string, link: string}>}>;
+	private data: Array<{index: number, name: string, content?: Array<{sname: string, img: string, link: string}>}>;
 	private error: string;
 	
   	constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private events: Events) {
 		this.events.publish("deactivate");
-		this.data = [
+		/*this.data = [
 			{
 				index: 1,
 				name: "Antivirus",
@@ -58,8 +58,8 @@ export class SoftwarePage {
 					}
 				]
 			},
-		];
-		//this.loadContent();
+		];*/
+		this.loadContent();
   	}
 
 	openLink(link){
@@ -82,7 +82,7 @@ export class SoftwarePage {
 	reload(event){
 		if (event.progress > 1 && event.state === "refreshing"){
 			this.error = "";
-			//this.loadContent();
+			this.loadContent();
 			setTimeout(() => {
 				event.complete();
 			}, 1000);
@@ -92,7 +92,7 @@ export class SoftwarePage {
 	}
 
 	loadContent(){
-		//let sdata: any;
+		let sdata: any;
 		let loading = this.loadingCtrl.create({
 			spinner: 'dots',
 			content: 'Loading Please Wait...'
@@ -100,7 +100,7 @@ export class SoftwarePage {
 		
 		loading.present();
 		
-		/*setTimeout(() => {
+		setTimeout(() => {
 			if (!sdata){
 				this.clear();
 				loading.dismiss();
@@ -109,53 +109,67 @@ export class SoftwarePage {
 		}, 5000);
 		
 		let xml = new XMLHttpRequest();
-		xml.open("POST", "http://ictlibrarybeacon.xyz/api/book/get/", true);
+		xml.open("POST", "http://ictlibrarybeacon.xyz/api/software/get/", true);
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xml.onreadystatechange = (() => {
-			if (xml.readyState == 4 && xml.status == 200){
+			if (xml.readyState === 4 && xml.status === 200){
 				this.clear();
 				
 				sdata = JSON.parse(xml.responseText);
 				
 				for(let i = 0; i < sdata.rows; i++){
-					if (i > 0){
-						this.data.push({
-							index: i,
-							name: sdata[i].book_name,
-							img: "http://ictlibrarybeacon.xyz/images/coverbook/"+sdata[i].book_cover,
-							lineshelf: parseInt(sdata[i].book_lineshelf),
-							detail: sdata[i].book_description
-						});
-					}else{
+					if (!this.data){
 						this.data = [{
 							index: i,
-							name: sdata[i].book_name,
-							img: "http://ictlibrarybeacon.xyz/images/coverbook/"+sdata[i].book_cover,
-							lineshelf: parseInt(sdata[i].book_lineshelf),
-							detail: sdata[i].book_description
+							name: sdata[i].software_kind,
 						}];
-						this.select = [{
-							index: i,
-							name: sdata[i].book_name,
-							img: "http://ictlibrarybeacon.xyz/images/coverbook/"+sdata[i].book_cover,
-							lineshelf: parseInt(sdata[i].book_lineshelf),
-							detail: sdata[i].book_description
-						}];
+						for(let j = 0; j < sdata[i].rows; j++){
+							if (!this.data[i].content){
+								this.data[i].content = [{
+									sname: sdata[i][j].software_name,
+									img: "http://ictlibrarybeacon.xyz/images/coversoftware/"+sdata[i][j].software_cover,
+									link: sdata[i][j].software_linkdownload,
+								}];
+							}else{
+								this.data[i].content.push({
+									sname: sdata[i][j].software_name,
+									img: "http://ictlibrarybeacon.xyz/images/coversoftware/"+sdata[i][j].software_cover,
+									link: sdata[i][j].software_linkdownload,
+								});
+							}
+						}
+					}else{
+						this.data.push({
+							index: this.data.length,
+							name: sdata[i].software_kind,
+						});
+						for(let j = 0; j < sdata[i].rows; j++){
+							if (!this.data[i].content){
+								this.data[i].content = [{
+									sname: sdata[i][j].software_name,
+									img: "http://ictlibrarybeacon.xyz/images/coversoftware/"+sdata[i][j].software_cover,
+									link: sdata[i][j].software_linkdownload,
+								}];
+							}else{
+								this.data[i].content.push({
+									sname: sdata[i][j].software_name,
+									img: "http://ictlibrarybeacon.xyz/images/coversoftware/"+sdata[i][j].software_cover,
+									link: sdata[i][j].software_linkdownload,
+								});
+							}
+						}
 					}
 				}
 				
 				loading.dismiss();
-			}/*else{
-				this.error += "xml.readyState : "+JSON.stringify(xml.readyState)+" &&&& ";
-				this.error += "xml.status : "+JSON.stringify(xml.status)+" ========== ";
 			}
 		});
-		xml.send("action=latest");*/
+		xml.send();
 	}
 
 	clear() {
 		this.error = "";
-		if (this.data){
+		if (typeof this.data !== "undefined"){
 			this.data.length = 0;
 		}
 	}
