@@ -9,26 +9,11 @@ import { NewbookPage } from '../newbook/newbook';
   templateUrl: 'news.html'
 })
 export class NewsPage {
-	
-	private featured: string;
-	private title: string;
-	private data: Array<{title: string, content: string}>;
+	private data: Array<{title: string, content: string, img: string}>;
 	private error: string;
 	
   	constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private events: Events) {
-		//this.loadContent();
-		this.featured = "assets/m/f.png";
-		this.title = "The Social Network";
-		this.data = [
-			{
-				title: "กิจกรรมสัมมนาวิชาการวิทยาการคอมพิวเตอร์",
-				content: "สาขาวิชาวิทยาการจัดการคอมพิวเตอร์ คณะ ICT จัดกิจกรรมสัมมนาวิชาการวิทยาการคอมพิวเตอร์ หัวข้อ ?Automated Testing in Continuo....."
-			},
-			{
-				title: "คว้ารางวัลชมเชย การแข่งขัน NSC 2017",
-				content: "นิสิตสาขาวิชาวิทยาการคอมพิวเตอร์ คณะเทคโนโลยีสารสนเทศและการสื่อสารคว้ารางวัลชมเชย การแข่งขันพัฒนาโปรแกรมคอมพิวเตอร์แห....."
-			}
-		];
+		this.loadContent();
 		this.events.publish("deactivate");
   	}
 
@@ -58,37 +43,56 @@ export class NewsPage {
 	}
 
 	loadContent(){
+		let sdata: any;
 		let loading = this.loadingCtrl.create({
 			spinner: 'dots',
 			content: 'Loading Please Wait...'
 		});
 		
 		loading.present();
+
+		setTimeout(() => {
+			if (!sdata){
+				this.clear();
+				loading.dismiss();
+				this.error = "ไม่พบการเชื่อมต่ออินเตอร์เน็ต กรุณาเปิดใช้งานอินเตอร์เน็ตแล้วเลื่อนหน้านี้ลงเพื่อโหลดข้อมูลใหม่อีกครั้ง";
+			}
+		}, 5000);
 		
-		/*let xml = new XMLHttpRequest();
-		xml.open("POST", "http://ictlibrarybeacon.xyz/api/book/get/", true);
+		let xml = new XMLHttpRequest();
+		xml.open("POST", "http://ictlibrarybeacon.xyz/api/news/get/", true);
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xml.onreadystatechange = (() => {
 			if (xml.readyState == 4 && xml.status == 200){
-				let sdata = JSON.parse(xml.responseText);
+				sdata = JSON.parse(xml.responseText);
 				
 				for(let i = 1; i < sdata.rows; i++){
-					if (i > 0){
-						this.data.push({
-							"img": sdata[i].pic_book,
-						});
+					if (!this.data){
+						this.data = [{
+							title: sdata[i].sugcon_title,
+							content: sdata[i].sugcon_content,
+							img: sdata[i].sugcon_picture,
+						}];
 					}else{
-						this.featured = sdata[i].pic_book;
+						this.data.push({
+							title: sdata[i].sugcon_title,
+							content: sdata[i].sugcon_content,
+							img: sdata[i].sugcon_picture,
+						});
 					}
 				}
 				
 				loading.dismiss();
-			}/*else{
-				this.error += "xml.readyState : "+JSON.stringify(xml.readyState)+" &&&& ";
-				this.error += "xml.status : "+JSON.stringify(xml.status)+" ========== ";
 			}
 		});
-		xml.send("action=test");*/
+		xml.send();
+	}
+
+	clear(){
+		this.error = "";
+		if (typeof this.data !== "undefined"){
+			this.data.length = 0;
+		}
 	}
 
 }

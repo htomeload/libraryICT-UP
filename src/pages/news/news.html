@@ -48,6 +48,10 @@
 		</ion-refresher-content>
 	</ion-refresher>
 	<ion-item *ngFor="let x of data" style="margin-top: 10%;">
+		<div style="position: relative; height: 30%; width: 100%;">
+			<img [src]="x.img" style="height: 50%; width: auto;" />
+		</div>
+		<br />
 		{{x.title}}
 		<br />
 		{{x.content}}

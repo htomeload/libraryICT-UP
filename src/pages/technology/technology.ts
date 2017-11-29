@@ -11,7 +11,6 @@ import { NewsPage } from '../news/news';
 export class TechnologyPage {
 	
 	private data: Array<{index: number, name: string, img: string, detail: string}>;
-	private select: Array<{index: number, name: string, img: string, detail: string}>;
 	private error: string;
 	
   	constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private events: Events) {
@@ -66,7 +65,7 @@ export class TechnologyPage {
 		}, 5000);
 		
 		let xml = new XMLHttpRequest();
-		xml.open("POST", "http://ictlibrarybeacon.xyz/api/book/get/", true);
+		xml.open("POST", "http://ictlibrarybeacon.xyz/api/technology/get/", true);
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xml.onreadystatechange = (() => {
 			if (xml.readyState == 4 && xml.status == 200){
@@ -75,41 +74,32 @@ export class TechnologyPage {
 				sdata = JSON.parse(xml.responseText);
 				
 				for(let i = 0; i < sdata.rows; i++){
-					if (i > 0){
-						this.data.push({
-							index: i,
-							name: sdata[i].book_name,
-							img: "http://ictlibrarybeacon.xyz/images/coverbook/"+sdata[i].book_cover,
-							detail: sdata[i].book_description
-						});
-					}else{
+					if (typeof this.data === "undefined"){
 						this.data = [{
 							index: i,
-							name: sdata[i].book_name,
-							img: "http://ictlibrarybeacon.xyz/images/coverbook/"+sdata[i].book_cover,
-							detail: sdata[i].book_description
+							name: sdata[i].techno_name,
+							img: "http://ictlibrarybeacon.xyz/images/covertechnology/"+sdata[i].techno_picture,
+							detail: sdata[i].techno_content
 						}];
-						this.select = [{
-							index: i,
-							name: sdata[i].book_name,
-							img: "http://ictlibrarybeacon.xyz/images/coverbook/"+sdata[i].book_cover,
-							detail: sdata[i].book_description
-						}];
+					}else{
+						this.data.push({
+							index: this.data.length,
+							name: sdata[i].techno_name,
+							img: "http://ictlibrarybeacon.xyz/images/covertechnology/"+sdata[i].techno_picture,
+							detail: sdata[i].techno_content
+						});
 					}
 				}
 				
 				loading.dismiss();
-			}/*else{
-				this.error += "xml.readyState : "+JSON.stringify(xml.readyState)+" &&&& ";
-				this.error += "xml.status : "+JSON.stringify(xml.status)+" ========== ";
-			}*/
+			}
 		});
-		xml.send("action=latest");
+		xml.send();
 	}
 
 	clear() {
 		this.error = "";
-		if (this.data){
+		if (typeof this.data !== "undefined"){
 			this.data.length = 0;
 		}
 	}
