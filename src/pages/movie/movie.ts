@@ -79,7 +79,7 @@ export class MoviePage {
 				let date = new Date();
 				let h = date.getHours();
 				let m = date.getMinutes();
-				let hm = h.toString()+m.toString();
+				let hm = h.toString()+"."+m.toString();
 				
 				for(let i = 0; i < sdata.rows; i++){
 					if (!this.data){
@@ -101,7 +101,7 @@ export class MoviePage {
 					if (!this.featured){
 						let splits = sdata[i].movie_start.split(":");
 						let hs = parseInt(splits[0]).toString()+"."+parseInt(splits[1]).toString();
-
+						
 						if (hm < hs){
 							this.featured = {
 								title: sdata[i].movie_name,

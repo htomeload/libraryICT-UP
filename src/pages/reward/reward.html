@@ -32,12 +32,12 @@
 			</ion-row>
 			<ion-row>
 				<ion-col>
-					<ion-input placeholder="กรุณาใส่ ชื่อ-นามสกุล"></ion-input>
+					<ion-input placeholder="กรุณาใส่ ชื่อ-นามสกุล" [(ngModel)]="ownername"></ion-input>
 				</ion-col>
 			</ion-row>
 		</ion-grid>
 	</div>
 	<br />
-	<button ion-button block class="primary" style="margin-bottom: 1.5rem;">รับรางวัล</button>
+	<button ion-button block class="primary" style="margin-bottom: 1.5rem;" (click)="savereward()">รับรางวัล</button>
 	<button ion-button block class="secondary" (click)="yourreward()">รางวัลที่มี</button>
 </ion-content>

@@ -3,6 +3,7 @@ import { NavController, LoadingController, Events } from 'ionic-angular';
 
 import { MoviePage } from '../movie/movie';
 import { NewsPage } from '../news/news';
+import { TechinfoPage } from '../techinfo/techinfo';
 
 @Component({
   selector: 'page-technology',
@@ -45,6 +46,7 @@ export class TechnologyPage {
 
 	popInfo(index){
 		console.log("Index is "+index);
+		this.navCtrl.push(TechinfoPage, {"tech": this.data[index]});
 	}
 
 	loadContent(){

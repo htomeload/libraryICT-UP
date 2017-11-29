@@ -1,0 +1,23 @@
+<ion-header>
+  	<ion-navbar class="no-padding">
+      	<ion-grid class="nav-bar">
+			<ion-row>
+				<ion-col class="text-menu align-center" style="-webkit-flex: 3;">
+					<div style="width: 100%; transform: translate(-5%, 30%);">
+						{{data.name}}
+					</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+  	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<div class="techinfo-img-box">
+  		<img [src]="data.img" class="techinfo-img" />
+	</div>
+	<div style="position: relative; width: 100%; display: inline-block;">
+		<h3 style="width: 100%; text-align: center; display: inline-block;">{{data.name}}</h3>
+		<p style="width: 100%; display: inline-block;">{{data.detail}}</p>
+	</div>
+</ion-content>

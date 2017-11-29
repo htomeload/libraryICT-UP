@@ -18,6 +18,7 @@ import { BookInfoPage } from '../pages/bookinfo/bookinfo';
 import { BookPage } from '../pages/book/book';
 import { ExhibitionPage } from '../pages/exhibition/exhibition';
 import { TechnologyPage } from '../pages/technology/technology';
+import { TechinfoPage } from '../pages/techinfo/techinfo';
 import { SoftwarePage } from '../pages/software/software';
 import { AdminloginPage } from '../pages/adminlogin/adminlogin';
 import { BeaconaddPage } from '../pages/beaconadd/beaconadd';
@@ -57,6 +58,7 @@ import { BeaconsDBProvider } from '../provider/beacons/beacons';
 		BeaconrangPage,
 		MapaddPage,
 		LandadderPage,
+		TechinfoPage,
   	],
   	imports: [
     	BrowserModule,
@@ -84,6 +86,7 @@ import { BeaconsDBProvider } from '../provider/beacons/beacons';
 		BeaconrangPage,
 		MapaddPage,
 		LandadderPage,
+		TechinfoPage,
   	],
   	providers: [
     	StatusBar,

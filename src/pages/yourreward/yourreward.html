@@ -20,14 +20,9 @@
 <ion-content padding>
 	<div style="margin-top: 10%; margin-bottom: 1%; width: 100%;" class="align-center">
 		<ion-grid style="background-color: white; border: 3px solid black;">
-			<ion-row>
+			<ion-row *ngFor="let x of reward">
 				<ion-col>
 					<img src="assets/img/card.png" />
-				</ion-col>
-			</ion-row>
-			<ion-row>
-				<ion-col>
-					<img src="assets/img/card2.png" />
 				</ion-col>
 			</ion-row>
 		</ion-grid>

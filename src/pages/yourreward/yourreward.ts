@@ -7,7 +7,18 @@ import { NavController } from 'ionic-angular';
 })
 export class YourrewardPage {
 
-  	constructor(public navCtrl: NavController) {
-  	}
+  private reward: Array<any>;
+
+  constructor(public navCtrl: NavController) {
+    let x = parseInt(localStorage.getItem("indexer"));
+
+    for(let i = 0; i < x; i++){
+      if (!this.reward){
+        this.reward = [localStorage.getItem("reward_"+i)];
+      }else{
+        this.reward.push(localStorage.getItem("reward_"+i));
+      }
+    }
+  }
 
 }
