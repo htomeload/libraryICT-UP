@@ -4,6 +4,8 @@ import { NavController, LoadingController, Events } from 'ionic-angular';
 import { BookPage } from '../book/book';
 import { ExhibitionPage } from '../exhibition/exhibition';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 @Component({
   selector: 'page-software',
   templateUrl: 'software.html'
@@ -12,58 +14,17 @@ export class SoftwarePage {
 	
 	private data: Array<{index: number, name: string, content?: Array<{sname: string, img: string, link: string}>}>;
 	private error: string;
+	private browserOptions: string;
 	
-  	constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private events: Events) {
+  	constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private events: Events, private iab: InAppBrowser) {
 		this.events.publish("deactivate");
-		/*this.data = [
-			{
-				index: 1,
-				name: "Antivirus",
-				content: [
-					{
-						 sname: "Iobit Malware Fighter",
-						 img: "assets/rs/Iobit-Malware-Fighter-Pro-3-Crack-License-Key-Full-Download.png",
-						 link: "https://www.google.com"
-					},
-					{
-						 sname: "Avast Internet Security",
-						 img: "assets/rs/avast_internet_security_2015_boxshot.png",
-						 link: "https://www.google.com"
-					},
-					{
-						 sname: "ESET NOD32",
-						 img: "assets/rs/1466908677_eset-nod32-besplatno-notntivirus.png",
-						 link: "https://www.google.com"
-					}
-				]
-			},
-			{
-				index: 2,
-				name: "Utilities software",
-				content: [
-					{
-						 sname: "Advanced System Care",
-						 img: "assets/rs/adv-hit2k.png",
-						 link: "https://www.google.com"
-					},
-					{
-						 sname: "Winrar",
-						 img: "assets/rs/sw_winrar-Hit2k.png",
-						 link: "https://www.google.com"
-					},
-					{
-						 sname: "System Mechanic",
-						 img: "assets/rs/sm_boxshot_large.png",
-						 link: "https://www.google.com"
-					}
-				]
-			},
-		];*/
 		this.loadContent();
+		this.browserOptions = "location=no,hardwareback=no";
   	}
 
 	openLink(link){
-		window.open(link, '_blank');
+		let browser = this.iab.create(link, '_self', this.browserOptions);
+		browser.show();
 	}
 
 	goPage(page){

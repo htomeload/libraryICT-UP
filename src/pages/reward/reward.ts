@@ -14,17 +14,17 @@ export class RewardPage {
 	constructor(public navCtrl: NavController, private alertCtrl: AlertController) {
 		let i = localStorage.getItem("indexer");
 
-		if (i === ""){
+		if (i === "" || i === "NaN"){
 			localStorage.setItem("indexer", "0");
 		}
 	}
 
 	savereward(){
 		let i = parseInt(localStorage.getItem("indexer"));
+		i++;
 
-		localStorage.setItem("reward_"+i, this.ownername);
-
-		localStorage.setItem("indexer", (++i).toString());
+		localStorage.setItem("reward_"+String(i), this.ownername);
+		localStorage.setItem("indexer", String(i));
 
 		let alert = this.alertCtrl.create({
 			title: "ระบบ",
