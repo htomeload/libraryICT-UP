@@ -97,7 +97,7 @@ export class ExhibitionPage {
 						this.data.push({
 							index: this.data.length,
 							name: sdata[i].exhi_name,
-							img: "http://ictlibrarybeacon.xyz/images/coverexhibition/"+sdata[i].exhi_picture,
+							img: "http://ictlibrarybeacon.xyz/images/coverexhi/"+sdata[i].exhi_picture,
 							detail: sdata[i].exhi_content
 						});
 					}

@@ -3,7 +3,8 @@ page-technology {
 		position: relative;
 		border-radius: 4rem;
 		height: 100%;
-		width: 100%;
+		width: auto;
+		margin: auto;
 	}
 	.technology-contain {
 		position: relative;
@@ -11,5 +12,6 @@ page-technology {
 		margin: 0.5rem;
 		padding: 0.5rem;
 		border-bottom: 1px solid #dedede; 
+		text-align: center;
 	}
 }

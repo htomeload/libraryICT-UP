@@ -499,6 +499,7 @@ export class MyApp extends BeaconsDBProvider {
 			let result = (() => {
 				if (xhr.status === 200 && xhr.readyState === 4){
 					let v = JSON.parse(xhr.responseText);
+					console.log(v);
 					
 					// Create notification and toast message with response from server
 					this.localNotifications.schedule({

@@ -66,18 +66,18 @@ export class NewsPage {
 			if (xml.readyState == 4 && xml.status == 200){
 				sdata = JSON.parse(xml.responseText);
 				
-				for(let i = 1; i < sdata.rows; i++){
+				for(let i = 0; i < sdata.rows; i++){
 					if (!this.data){
 						this.data = [{
 							title: sdata[i].sugcon_title,
 							content: sdata[i].sugcon_content,
-							img: sdata[i].sugcon_picture,
+							img: "http://ictlibrarybeacon.xyz/images/coversugcon/"+sdata[i].sugcon_picture,
 						}];
 					}else{
 						this.data.push({
 							title: sdata[i].sugcon_title,
 							content: sdata[i].sugcon_content,
-							img: sdata[i].sugcon_picture,
+							img: "http://ictlibrarybeacon.xyz/images/coversugcon/"+sdata[i].sugcon_picture,
 						});
 					}
 				}

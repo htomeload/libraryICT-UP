@@ -77,16 +77,16 @@ export class TechnologyPage {
 					if (typeof this.data === "undefined"){
 						this.data = [{
 							index: i,
-							name: sdata[i].techno_name,
-							img: "http://ictlibrarybeacon.xyz/images/covertechnology/"+sdata[i].techno_picture,
-							detail: sdata[i].techno_content
+							name: sdata[i].tecno_name,
+							img: "http://ictlibrarybeacon.xyz/images/covertecno/"+sdata[i].tecno_picture,
+							detail: sdata[i].tecno_content
 						}];
 					}else{
 						this.data.push({
 							index: this.data.length,
-							name: sdata[i].techno_name,
-							img: "http://ictlibrarybeacon.xyz/images/covertechnology/"+sdata[i].techno_picture,
-							detail: sdata[i].techno_content
+							name: sdata[i].tecno_name,
+							img: "http://ictlibrarybeacon.xyz/images/covertecno/"+sdata[i].tecno_picture,
+							detail: sdata[i].tecno_content
 						});
 					}
 				}
