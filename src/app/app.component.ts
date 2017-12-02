@@ -21,6 +21,7 @@ import { Toast } from '@ionic-native/toast';
 import { BLE } from '@ionic-native/ble';
 import { IBeacon } from '@ionic-native/ibeacon';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { Device } from '@ionic-native/device';
 
 import { BeaconsDBProvider } from '../provider/beacons/beacons';
 
@@ -43,9 +44,10 @@ export class MyApp extends BeaconsDBProvider {
 
 	constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private alertCtrl: AlertController, 
 				private locationAccuracy: LocationAccuracy, private ble: BLE, public events: Events, private backgroundMode: BackgroundMode, 
-			   	private localNotifications: LocalNotifications, private toast: Toast, private ibeacon: IBeacon, public loadingCtrl: LoadingController) {
+				private localNotifications: LocalNotifications, private toast: Toast, private ibeacon: IBeacon, public loadingCtrl: LoadingController, 
+				private device: Device) {
 		super();
-		
+
 		// initial some property.
 		this.rc = 0;
 		this.initializeApp();
@@ -543,8 +545,8 @@ export class MyApp extends BeaconsDBProvider {
 				minid = this.scanres[0].id;
 			}
 			
-			xhr.send("id="+minid+"&meter="+minmeter); // ---> Sending request
-			console.log("Send request to server with param: id="+this.scanres[0].id+"&meter="+this.scanres[0].meter);
+			xhr.send("id="+minid+"&meter="+minmeter+"&device="+this.device.serial); // ---> Sending request
+			console.log("Send request to server with param: id="+minid+"&meter="+minmeter+"&device="+this.device.serial);
 			
 			// Set value to initial value
 			this.rc = 0;

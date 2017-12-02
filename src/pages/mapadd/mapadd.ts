@@ -49,6 +49,15 @@ export class MapaddPage {
 		
 	}
 
+	poppos(x, y){
+		let alerty = this.alertCtrl.create({
+			title: "ตำแหน่ง",
+			message: this.letter[x]+(y+1).toString(),
+			buttons: ["ปิด"],
+		});
+		alerty.present();
+	}
+
 	reload(event){
 		if (event.progress > 1 && event.state === "refreshing"){
 			this.loadcontent();
@@ -63,7 +72,7 @@ export class MapaddPage {
 	chosenIt(){
 		const alert = this.alertCtrl.create({
 			title: "ยืนยันเป็นตำแหน่งนี้ ?",
-			message: "คอลัมภ์&nbsp;&nbsp;:&nbsp;&nbsp;"+this.letter[this.cx]+"<br /><br />แถว&nbsp;&nbsp;:&nbsp;&nbsp;"+this.cy,
+			message: "คอลัมภ์&nbsp;&nbsp;:&nbsp;&nbsp;"+this.letter[this.cx]+"<br /><br />แถว&nbsp;&nbsp;:&nbsp;&nbsp;"+(this.cy+1).toString(),
 			buttons: [
 				{
 					text: "ตกลง",
@@ -186,7 +195,7 @@ export class MapaddPage {
 		for(let i = 0, x = this.forbid.length; i < x; i++){
 			set = document.getElementById(this.forbid[i].place);
 			
-			set.style.backgroundColor = "green";
+			set.style.backgroundColor = "rgba(0,255,0,0.5)";
 			set.style.textAlign = "center";
 			set.style.verticalAlign = "middle";
 			set.innerHTML = "<div style='margin: auto; color: white;' class='have-beacon'></div>";

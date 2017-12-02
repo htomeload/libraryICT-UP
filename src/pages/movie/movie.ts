@@ -102,7 +102,10 @@ export class MoviePage {
 						let splits = sdata[i].movie_start.split(":");
 						let hs = parseInt(splits[0]).toString()+"."+parseInt(splits[1]).toString();
 						
-						if (hm < hs){
+						let fhm = parseFloat(hm);
+						let fhs = parseFloat(hs);
+						console.log(fhm+"<"+fhs, (fhm < fhs));
+						if (fhm < fhs){
 							this.featured = {
 								title: sdata[i].movie_name,
 								img: "http://ictlibrarybeacon.xyz/images/covermovie/"+sdata[i].movie_cover,

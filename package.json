@@ -24,6 +24,7 @@
         "@ionic-native/background-mode": "^4.3.0",
         "@ionic-native/ble": "^4.3.0",
         "@ionic-native/core": "3.12.1",
+        "@ionic-native/device": "^4.4.2",
         "@ionic-native/estimote-beacons": "^4.3.2",
         "@ionic-native/geofence": "^4.3.0",
         "@ionic-native/geolocation": "^4.3.0",

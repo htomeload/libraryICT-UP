@@ -33,6 +33,7 @@ import { Toast } from '@ionic-native/toast';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { IBeacon } from '@ionic-native/ibeacon';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Device } from '@ionic-native/device';
 
 import { BeaconsDBProvider } from '../provider/beacons/beacons';
 
@@ -99,6 +100,7 @@ import { BeaconsDBProvider } from '../provider/beacons/beacons';
 		IBeacon,
 		BeaconsDBProvider,
 		InAppBrowser,
+		Device,
     	{provide: ErrorHandler, useClass: IonicErrorHandler}
   	]
 })
