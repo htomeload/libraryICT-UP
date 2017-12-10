@@ -1,26 +1,34 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+This is source code of final project, write by student of University of Phayao, Phayao, Thailan.
 
-## How to use this template
+## What this project is about
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+This project was about problem in library in one school of university that have ordinary methods to present content to users which efficient less. So this project focus on how to represent content to users more efficient and then choice is application on smartphone with web application system for library's staff to manage content.
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+## What purpose of this project
 
-### With the Ionic CLI:
+The purpose of this project is build application on smartphone like android to represent content in to user with notification and toast message that easily to be notice by users which will raise chance for users to see content and staff can create rapid change content by web application which will be easily for staff to present any content in no time.
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+### How to use this source code:
+
+First you need to create ionic project with blank template.
 
 ```bash
 $ sudo npm install -g ionic cordova
 $ ionic start myBlank blank
 ```
 
-Then, to run it, cd into `myBlank` and run:
+Then, clone this source code.
 
 ```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
+$ git clone https://github.com/htomeload/libraryICT-UP
+```
+And then replace `src` and `resources` folder in ionic project with clone of source code.
+
+You will need generic device to run this application.
+
+```bash
+$ ionic cordova run --list
+$ ionic cordova run android --device
 ```
 
-Substitute ios for android if not on a Mac.
-
+This project was focus on android, if you need to build for ios you may need this link as reference : https://ionicframework.com/docs/intro/deploying/#ios-devices
