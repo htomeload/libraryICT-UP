@@ -1,4 +1,4 @@
-This is source code of final project, write by student of University of Phayao, Phayao, Thailan.
+This is source code of final project, coding by student of University of Phayao, Phayao, Thailand.
 
 ## What this project is about
 
