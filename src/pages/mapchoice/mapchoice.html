@@ -1,0 +1,48 @@
+<ion-header>
+  	<ion-navbar class="no-padding">
+      	<ion-grid class="nav-bar">
+			<ion-row>
+				<ion-col class="text-menu align-center" style="-webkit-flex: 3;">
+					<div style="width: 100%; transform: translate(-5%, 30%);">
+						เลือกแผนที่
+					</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+  	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-refresher (ionRefresh)="reload($event)">
+		<ion-refresher-content
+		pullingIcon="md-circles"
+		pullingText="ดึงลงเพื่อโหลดข้อมูลใหม่"
+		refreshingSpinner="md-circles"
+		refreshingText="กำลังดึงข้อมูลจากเซิฟเวอร์...">
+		</ion-refresher-content>
+	</ion-refresher>
+	{{msg}}
+	<div style="width: 100%; text-align: center; margin-top: 1.5rem;" *ngIf="loading">
+		<ion-spinner name="dots" style="margin: auto;"></ion-spinner>
+		<br /><br />
+		<h3>กำลังดึงข้อมูล</h3>
+		<br />
+	</div>
+	<div *ngIf="!loading">
+		<br /><br />
+	</div>
+	<ion-item *ngIf="!loading">
+		<ion-label>แผนที่</ion-label>
+		<ion-select [(ngModel)]="index" (ngModelChange)="showvalue(index)">
+			<ion-option [value]="m.index" *ngFor="let m of map">{{m.name}}</ion-option>
+		</ion-select>
+	</ion-item>
+	<br />
+	<div *ngIf="index || index == 0" style="position: relative; width: 100%; height: 60%; padding: 2rem;">
+		<img [src]="map[index].bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 80%; display: inline-block;" /><br />
+		<p style="position: absolute; left: 0; bottom: 1%; display: inline-block; width: 100%; text-align: center;">{{map[index].name}}</p>
+	</div>
+	<div *ngIf="!loading && (index || index == 0)" style="width: 100%; padding: 1rem; margin-top: 2rem;">
+		<button ion-button block (click)="chosenIt()">เลือกแผนที่</button>
+	</div>
+</ion-content>

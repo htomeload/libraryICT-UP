@@ -9,9 +9,10 @@ import { WelcomePage } from "../welcome/welcome";
 })
 export class LandadderPage {
 	
-	private v: {id: string, meter: number, placex: number, placey: number, staffid?: number, lastfour?: string};
+	private v: {id: string, meter: number, placex: number, placey: number, staffid?: number, lastfour?: string, mapid?: number};
 	private beacon: {identifier: string, uuid?: string, major?: number, minor?: number, lastfour?: string};
-	public letter: any;
+	public letter: Array<string>;
+	private map: {index: number, id: number, name: string, bg: string, row: number, col: number};
 	
   	constructor(public navCtrl: NavController, private events: Events, public alertCtrl: AlertController, private navParams: NavParams, 
 			    public loadingCtrl: LoadingController){
@@ -19,15 +20,16 @@ export class LandadderPage {
 		
 		this.beacon = this.navParams.get("beacon");
 		
-		this.letter = ["A", "B", "C", "D", "E", "F", "G"];
+		this.letter = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 		
 		let id = this.beacon.identifier;
 		let meter = this.navParams.get("meter");
 		let placex = this.navParams.get("placex");
 		let placey = this.navParams.get("placey");
 		let lastfour = this.beacon.lastfour;
+		this.map = this.navParams.get("map");
 		
-		this.v = {id: id, meter: meter, placex: placex, placey: placey, staffid: parseInt(localStorage.getItem("staffid")), lastfour: lastfour};
+		this.v = {id: id, meter: meter, placex: placex, placey: placey, staffid: parseInt(localStorage.getItem("staffid")), lastfour: lastfour, mapid: this.map.id};
   	}
 	
 	ionViewWillLeave(){
@@ -81,7 +83,7 @@ export class LandadderPage {
 			}
 		}, 5000);
 		
-		let str: string = "uuid="+this.beacon.uuid+"&major="+this.beacon.major+"&minor="+this.beacon.minor+"&id="+this.beacon.identifier+"&meter="+this.v.meter+"&place_x="+this.v.placex+"&place_y="+this.v.placey+"&staffid="+this.v.staffid;
+		let str: string = "uuid="+this.beacon.uuid+"&major="+this.beacon.major+"&minor="+this.beacon.minor+"&id="+this.beacon.identifier+"&meter="+this.v.meter+"&place_x="+this.v.placex+"&place_y="+this.v.placey+"&mapid="+this.v.mapid+"&staffid="+this.v.staffid;
 		console.log("send request to server with param: "+str);
 		//loading.dismiss();
 		let xhr = new XMLHttpRequest();

@@ -13,31 +13,43 @@ export class MapaddPage {
 	private forbid: Array<{index: number, name: string, place: string}>;
 	public posx: Array<{x: number}>;
 	public posy: Array<{y: number}>;
-	public letter: any;
+	public letter: Array<string>;
+	private map: {index: number, id: number, name: string, bg: string, row: number, col: number};
 	private cx: number;
 	private cy: number;
 	private loading: boolean;
 	private formpass: boolean;
+	private error: boolean;
+	private msg: string;
 	
   	constructor(public navCtrl: NavController, private events: Events, public alertCtrl: AlertController, private navParams: NavParams){
 		this.events.publish("deactivate");
 		
 		let beacon = this.navParams.get("beacon");
 		let meter = this.navParams.get("meter");
+		this.map = this.navParams.get("map");
 		
 		this.v = {beacon: beacon, meter: meter};
+		console.log(this.map);
 		this.cx = 0;
 		this.cy = 0;
 		this.loading = true;
-		this.letter = ["A", "B", "C", "D", "E", "F", "G"];
+		this.letter = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 		this.formpass = false;
+		this.error = false;
 		
-		for(let i = 0; i < 7; i++){
+		for(let i = 0; i < this.map.col; i++){
 			if (i === 0){
 				this.posx = [{x: i}];
-				this.posy = [{y: i}];
 			}else{
 				this.posx.push({x: i});
+			}
+		}
+
+		for(let i = 0; i < this.map.row; i++){
+			if (i === 0){
+				this.posy = [{y: i}];
+			}else{
 				this.posy.push({y: i});
 			}
 		}
@@ -77,7 +89,7 @@ export class MapaddPage {
 				{
 					text: "ตกลง",
 					handler: () => {
-						this.navCtrl.push(LandadderPage, {beacon: this.v.beacon, meter: this.v.meter, placex: this.cx, placey: this.cy});
+						this.navCtrl.push(LandadderPage, {beacon: this.v.beacon, meter: this.v.meter, placex: this.cx, placey: this.cy, map: this.map});
 					}
 				},
 				{
@@ -95,6 +107,8 @@ export class MapaddPage {
 			this.forbid.length = 0;
 		}
 		
+		this.error = false;
+		this.msg = "";
 		this.loading = true;
 	}
 
@@ -106,6 +120,7 @@ export class MapaddPage {
 
 	loadcontent(){
 		this.reset();
+		let val: any;
 		
 		let xhr = new XMLHttpRequest();
 		xhr.open("POST", "http://ictlibrarybeacon.xyz/api/beacon/exist/", true);
@@ -114,15 +129,25 @@ export class MapaddPage {
 		setTimeout(() => {
 			if (!this.forbid){
 				this.loading = false;
+				this.error = true;
+				this.msg = "ไม่สามารถติดต่อกับเซิฟเวอร์ได้ กรุณาตรวจสอบการเชื่อมต่ออินเตอร์เน็ตแล้วดึงหน้านี้ลงเพื่อโหลดหน้าใหม่";
 			}
 		}, 5000);
 		
 		let push = (() => {
 			if (xhr.status === 200 && xhr.readyState === 4){
-				let val = JSON.parse(xhr.responseText);
+				val = JSON.parse(xhr.responseText);
 				
 				if (val.rows > 0){
 					this.loading = false;
+				}else{
+					this.loading = false;
+					this.forbid = [{
+						index: 0,
+						name: "",
+						place: "",
+					}];
+					this.forbid.length = 0;
 				}
 				
 				for(let i = 0; i < val.rows; i++){
@@ -141,42 +166,49 @@ export class MapaddPage {
 						});
 					}
 				}
-				
+
 				this.setcurpos();
 			}
 		});
 		
-		xhr.send();
+		xhr.send("id="+this.map.id);
 		xhr.onreadystatechange = push;
 	}
 
 	changepos(){
-		for(let i = 0; i < 7; i++){
-			for(let j = 0; j < 7; j++){
+		for(let i = 0; i < this.map.row; i++){
+			for(let j = 0; j < this.map.col; j++){
 				if (i === this.cy && j === this.cx){
-					for(let k = 0, x = this.forbid.length; k < x; k++){
-						if (this.forbid[k].place === this.cy+","+this.cx){
-							const alert = this.alertCtrl.create({
-								title: "ระบบ",
-								message: "ตำแหน่งที่เลือกมี Beacon วางอยู่แล้ว โปรดเลือกตำแหน่งอื่น",
-								buttons: [
-									{
-										text: "ปิด",
-										handler: () => {
+					if (this.forbid.length > 0){
+						for(let k = 0, x = this.forbid.length; k < x; k++){
+							if (this.forbid[k].place === this.cy+","+this.cx){
+								const alert = this.alertCtrl.create({
+									title: "ระบบ",
+									message: "ตำแหน่งที่เลือกมี Beacon วางอยู่แล้ว โปรดเลือกตำแหน่งอื่น",
+									buttons: [
+										{
+											text: "ปิด",
+											handler: () => {
+											}
 										}
-									}
-								]
-							});
-							alert.present();
-							this.formpass = false;
-							break;
+									]
+								});
+								alert.present();
+								this.formpass = false;
+								break;
+							}
+							if (k === x-1){
+								let set: any = document.getElementById(this.cy+","+this.cx);
+								
+								set.style.backgroundColor = "red";
+								this.formpass = true;
+							}
 						}
-						if (k === x-1){
-							let set: any = document.getElementById(this.cy+","+this.cx);
-							
-							set.style.backgroundColor = "red";
-							this.formpass = true;
-						}
+					}else{
+						let set: any = document.getElementById(this.cy+","+this.cx);
+						
+						set.style.backgroundColor = "red";
+						this.formpass = true;
 					}
 				}else{
 					let set: any = document.getElementById(i+","+j);
