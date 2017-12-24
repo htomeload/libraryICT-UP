@@ -9,6 +9,7 @@ import { NewbookPage } from '../pages/newbook/newbook';
 import { SearchPage } from '../pages/search/search';
 import { MoviePage } from '../pages/movie/movie';
 import { RewardPage } from '../pages/reward/reward';
+import { YourrewardPage } from '../pages/yourreward/yourreward';
 import { NewsPage } from '../pages/news/news';
 import { BookPage } from '../pages/book/book';
 import { ExhibitionPage } from '../pages/exhibition/exhibition';
@@ -60,7 +61,7 @@ export class MyApp extends BeaconsDBProvider {
 			{title: 'หน้าหลัก', component: HomePage, icon: 'md-home', index: 0},
 			{title: 'ดูเนื้อหา', component: NewbookPage, icon: 'md-easel', index: 1},
 			{title: 'ค้นหาหนังสือ', component: SearchPage, icon: 'md-search', index: 2},
-			{title: 'รางวัล', component: RewardPage, icon: 'md-medal', index: 0},
+			{title: 'รางวัล', component: YourrewardPage, icon: 'md-medal', index: 0},
 		];
 		
 		// requires user to enable OS service once time.
@@ -73,6 +74,11 @@ export class MyApp extends BeaconsDBProvider {
 			
 			console.log("Data's page is "+v.page);
 			switch(v.page){
+				case "rewards":{
+					console.log("Now go to RewardPage");
+					this.nav.push(RewardPage, {reward: {picture: v.picture, name: v.name, id: v.rewardid}});
+					break;
+				}
 				case "newbook":{
 					console.log("Now go to NewbookPage");
 					this.nav.setRoot(NewbookPage);
@@ -502,12 +508,16 @@ export class MyApp extends BeaconsDBProvider {
 				if (xhr.status === 200 && xhr.readyState === 4){
 					let v = JSON.parse(xhr.responseText);
 					console.log(v);
+
+					let picture = typeof v.picture === "undefined"? "":v.picture;
+					let name = typeof v.name === "undefined"? "":v.name;
+					let rewardid = typeof v.rewardid === "undefined"? "":v.rewardid;
 					
 					// Create notification and toast message with response from server
 					this.localNotifications.schedule({
 						id: 1,
 						text: v.message,
-						data: {page: v.page}
+						data: {page: v.page, picture: picture, name: name, rewardid: rewardid}
 					});
 					console.log("Got "+v.page+" from server, Notification is fire now.");
 					this.toast.show(v.message, '5000', 'bottom').subscribe(

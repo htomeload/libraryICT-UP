@@ -3,12 +3,12 @@
       	<ion-grid class="nav-bar">
 			<ion-row>
 				<ion-col>
-					<button class="icon-menu override-button-inner full-width text-left nav-bar" menuToggle>
+					<button class="icon-menu override-button-inner text-left full-width nav-bar" menuToggle>
 						<ion-icon name="menu"></ion-icon>
 					</button>
 				</ion-col>
 				<ion-col class="text-menu align-center" style="-webkit-flex: 3;">
-					<div style="width: 100%; transform: translate(-30%,14%);">
+					<div style="width: 100%; transform: translate(-16%,0%);">
 						รางวัลที่มี
 					</div>
 				</ion-col>
@@ -19,12 +19,23 @@
 
 <ion-content padding>
 	<div style="margin-top: 10%; margin-bottom: 1%; width: 100%;" class="align-center">
-		<ion-grid style="background-color: white; border: 3px solid black;">
+		<ion-grid *ngIf="show" style="background-color: white; border: 3px solid black;">
 			<ion-row *ngFor="let x of reward">
 				<ion-col>
-					<img src="assets/img/card.png" />
+					<img [src]="x.picture" style="width: 100%; height: auto;" />
+					<br />
+					<h5 style="width: 100%; display: inline-block; margin-top: 0.5rem;">ชื่อรางวัล : {{x.name}}</h5>
+					<br />
+					<h5 style="width: 100%; display: inline-block; margin-top: 0.5rem;">เจ้าของ : {{x.owner}}</h5>
+					<br />
+					<button ion-button (click)="redeem(x.index);" style="margin-top: 1rem;" color="secondary" full>ใช้คูปอง</button>
+					<br />
+					<button ion-button (click)="drop(x.index);" style="margin-top: 1rem;" color="danger" full>ทิ้งคูปอง</button>
+					<br />
+					<div style="height: 2px; width: 100%; display: inline-block; background-color: grey; margin-top: 0.5rem;"></div>
 				</ion-col>
 			</ion-row>
 		</ion-grid>
+		<h3 *ngIf="!show" style="padding: 1rem;">ไม่พบรางวัลถูกบันทึกภายในเครื่อง</h3>
 	</div>
 </ion-content>
